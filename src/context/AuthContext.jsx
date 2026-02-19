@@ -1,26 +1,21 @@
 import { createContext, useState, useEffect, useContext } from "react";
-// import jwtDecode from "jwt-decode"; 
+import * as api from "../services/api";
 
-/**
- * Contexte d'Authentification (Auth Context)
- * 
- * NOTE PÉDAGOGIQUE :
- * Le Contexte (Context) permet de passer des données à travers l'arbre des composants sans avoir à passer manuellement les props à chaque niveau.
- * Ici, nous l'utilisons pour partager l'état de l'utilisateur (`user`) et les fonctions de connexion/déconnexion à toute l'application.
- */
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isCheckingSession, setIsCheckingSession] = useState(true);
+    const [error, setError] = useState(null);
+
+    const clearError = () => setError(null);
 
     // Vérifier si l'utilisateur est déjà connecté au démarrage de l'application
     useEffect(() => {
         const token = localStorage.getItem("token");
 
         if (token) {
-            // Comme nous n'avons pas d'endpoint /me, nous supposons que si le token est là, l'utilisateur est connecté.
-            // Pour une meilleure UX, on décode le JWT pour récupérer l'email.
             try {
                 const payload = JSON.parse(atob(token.split('.')[1]));
                 setUser({ email: payload.username, roles: payload.roles });
@@ -29,18 +24,45 @@ export const AuthProvider = ({ children }) => {
                 localStorage.removeItem("token");
             }
         }
-        setLoading(false);
+        setIsCheckingSession(false);
     }, []);
+
+    const login = async (email, password) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const data = await api.login(email, password);
+            if (data && data.token) {
+                loginAction(data.token);
+                return data;
+            } else {
+                throw new Error("Token non reçu");
+            }
+        } catch (err) {
+            console.error("Login failed:", err);
+
+            // Traduction des messages d'erreur courants du backend
+            let errorMessage = err;
+            if (err === "Invalid credentials.") {
+                errorMessage = "Email ou mot de passe incorrect.";
+            } else if (err === "Network Error") {
+                errorMessage = "Impossible de contacter le serveur. Veuillez vérifier votre connexion.";
+            }
+
+            setError(errorMessage);
+            throw errorMessage;
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const loginAction = (token) => {
         localStorage.setItem("token", token);
-
-        // Décoder le token pour mettre à jour l'état utilisateur
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
             setUser({ email: payload.username, roles: payload.roles });
         } catch (e) {
-            setUser({ email: "Utilisateur" }); // Fallback
+            setUser({ email: "Utilisateur" });
         }
     };
 
@@ -50,11 +72,19 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loginAction, logoutAction, loading }}>
-            {!loading && children}
+        <AuthContext.Provider value={{
+            user,
+            isAuthenticated: !!user,
+            login,
+            logoutAction,
+            isLoading,
+            isCheckingSession,
+            error,
+            clearError
+        }}>
+            {!isCheckingSession && children}
         </AuthContext.Provider>
-    );  
+    );
 };
 
-// Hook personnalisé pour utiliser le contexte d'auth facilement
 export const useAuth = () => useContext(AuthContext);
