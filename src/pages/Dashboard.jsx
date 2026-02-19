@@ -1,201 +1,205 @@
 import React from 'react';
-import { 
-  Package, 
-  FileText, 
-  CheckSquare, 
-  AlertTriangle,
-  TrendingUp,
-  Clock,
-  Users,
-  ShoppingCart
+import {
+    Package,
+    FileText,
+    CheckSquare,
+    AlertTriangle,
+    Clock,
+    Users,
+    Layers
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
-import { Progress } from '../components/ui/progress';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useDashboardStats } from '../hooks/useApi';
 
 const Dashboard = () => {
-  const { user, hasAnyRole } = useAuth();
-  const navigate = useNavigate();
-  
-  const { data: stats, isLoading: statsLoading, error: statsError } = useDashboardStats();
+    const { user, hasAnyRole } = useAuth();
+    const navigate = useNavigate();
 
-  const defaultStats = {
-    requests_total: 0,
-    requests_pending: 0,
-    materials_total: 0,
-    materials_low_stock: 0,
-    pending_validations: 0,
-    user_requests_total: 0,
-    user_requests_pending: 0
-  };
+    const { data, isLoading: statsLoading, error: statsError } = useDashboardStats();
 
-  const currentStats = stats || defaultStats;
+    const currentStats = data?.stats || {};
+    const recentDemandes = data?.recent_demandes || [];
 
-  const getRoleSpecificStats = () => {
-    const roleStats = [];
+    const getRoleSpecificStats = () => {
+        const roleStats = [];
 
-    if (hasAnyRole(['admin', 'gestionnaire_stock', 'secretaire_executif', 'daaf'])) {
-      roleStats.push(
-        {
-          title: "Matériels en stock",
-          value: currentStats.materials_total,
-          icon: Package,
-          description: "Références actives",
-          color: "blue"
-        },
-        {
-          title: "Alertes stock",
-          value: currentStats.materials_low_stock,
-          icon: AlertTriangle,
-          description: "Sous le seuil minimum",
-          color: "orange",
-          urgent: currentStats.materials_low_stock > 0
+        // Stats pour ADMIN seulement
+        if (hasAnyRole(['ROLE_ADMIN'])) {
+            roleStats.push({
+                title: "Utilisateurs",
+                value: currentStats.total_utilisateurs || 0,
+                icon: Users,
+                description: "Comptes enregistrés",
+                color: "blue"
+            });
         }
-      );
-    }
 
-    if (hasAnyRole(['directeur', 'daaf', 'secretaire_executif', 'gestionnaire_stock'])) {
-      roleStats.push({
-        title: "Validations en attente",
-        value: currentStats.pending_validations,
-        icon: CheckSquare,
-        description: "Demandes à valider",
-        color: "purple",
-        urgent: currentStats.pending_validations > 0
-      });
-    }
-
-    roleStats.push(
-      {
-        title: "Mes demandes totales",
-        value: currentStats.user_requests_total,
-        icon: FileText,
-        description: "Mes demandes",
-        color: "indigo"
-      },
-      {
-        title: "Mes demandes en attente",
-        value: currentStats.user_requests_pending,
-        icon: Clock,
-        description: "En attente de validation",
-        color: "orange",
-        urgent: currentStats.user_requests_pending > 0
-      }
-    );
-
-    if (hasAnyRole(['admin', 'gestionnaire_stock'])) {
-      roleStats.push(
-        {
-          title: "Demandes totales",
-          value: currentStats.requests_total,
-          icon: FileText,
-          description: "Toutes les demandes",
-          color: "green"
+        // Stats pour COMPTABLE MATIERE (et ADMIN via hiérarchie)
+        if (hasAnyRole(['ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'])) {
+            roleStats.push(
+                {
+                    title: "Matériels",
+                    value: currentStats.total_materiels || 0,
+                    icon: Package,
+                    description: "Articles en stock",
+                    color: "green"
+                },
+                {
+                    title: "Catégories",
+                    value: currentStats.total_categories || 0,
+                    icon: Layers,
+                    description: "Familles de produits",
+                    color: "purple"
+                }
+            );
         }
-      );
-    }
 
-    return roleStats;
-  };
+        // Stats communes à tous (Demandes)
+        roleStats.push({
+            title: "Demandes",
+            value: currentStats.total_demandes || 0,
+            icon: FileText,
+            description: hasAnyRole(['ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN']) ? "Toutes les demandes" : "Mes demandes",
+            color: "orange",
+            urgent: !hasAnyRole(['ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN']) && currentStats.total_demandes > 0
+        });
 
-  const roleStats = getRoleSpecificStats();
+        return roleStats;
+    };
 
-  if (statsError) {
-    return (
-      <div className="space-y-6">
-        <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">
-              Bonjour, {user?.name}
-            </h1>
-            <p className="text-muted-foreground">
-              Erreur lors du chargement des données du dashboard
-            </p>
-          </div>
-        </div>
-        
-        <Card className="border-red-200">
-          <CardContent className="pt-6">
-            <div className="flex items-center space-x-2">
-              <AlertTriangle className="w-5 h-5 text-red-500" />
-              <p className="text-sm text-red-700">
-                Impossible de charger les statistiques. Vérifiez votre connexion.
-              </p>
+    const roleStats = getRoleSpecificStats();
+
+    if (statsError) {
+        return (
+            <div className="p-6 space-y-6">
+                <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+                    <div>
+                        <h1 className="text-3xl font-bold text-foreground">
+                            Bonjour, {user?.email}
+                        </h1>
+                        <p className="text-muted-foreground">
+                            Erreur lors du chargement des données.
+                        </p>
+                    </div>
+                </div>
+
+                <Card className="border-red-200 bg-red-50">
+                    <CardContent className="pt-6">
+                        <div className="flex items-center space-x-2">
+                            <AlertTriangle className="w-5 h-5 text-red-500" />
+                            <p className="text-sm text-red-700">
+                                Impossible de charger les statistiques : {statsError}
+                            </p>
+                        </div>
+                    </CardContent>
+                </Card>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+        );
+    }
+
+    return (
+        <div className="p-6 space-y-6">
+
+            <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
+                <div>
+                    <h1 className="text-3xl font-bold text-foreground">
+                        Bonjour, {user?.email}
+                    </h1>
+                    <p className="text-muted-foreground">
+                        Voici un aperçu de vos activités
+                        {statsLoading && " (chargement...)"}
+                    </p>
+                </div>
+                <div className="flex space-x-2">
+                    <Button onClick={() => navigate('/requests/new')} size="sm">
+                        <FileText className="w-4 h-4 mr-2" />
+                        Nouvelle demande
+                    </Button>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {roleStats.map((stat, index) => {
+                    const Icon = stat.icon;
+
+                    return (
+                        <Card key={index} className={`${stat.urgent ? 'border-orange-200 shadow-sm' : ''}`}>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium text-muted-foreground">
+                                    {stat.title}
+                                </CardTitle>
+                                <div className={`p-2 rounded-full ${stat.color === 'blue' ? 'bg-blue-100' :
+                                        stat.color === 'green' ? 'bg-green-100' :
+                                            stat.color === 'orange' ? 'bg-orange-100' :
+                                                stat.color === 'purple' ? 'bg-purple-100' :
+                                                    'bg-red-100'
+                                    }`}>
+                                    <Icon className={`w-4 h-4 ${stat.color === 'blue' ? 'text-blue-600' :
+                                            stat.color === 'green' ? 'text-green-600' :
+                                                stat.color === 'orange' ? 'text-orange-600' :
+                                                    stat.color === 'purple' ? 'text-purple-600' :
+                                                        'text-red-600'
+                                        }`} />
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="text-2xl font-bold text-foreground">
+                                    {statsLoading ? "..." : stat.value}
+                                </div>
+                                <p className="text-xs text-muted-foreground">{stat.description}</p>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
+            </div>
+
+            {recentDemandes.length > 0 && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-lg">Activités récentes</CardTitle>
+                        <CardDescription>Les 5 dernières demandes effectuées</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            {recentDemandes.map((demande) => (
+                                <div key={demande.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-muted/50 transition-colors">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-primary/10 rounded-full">
+                                            <Clock className="w-4 h-4 text-primary" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium">Demande #{demande.id}</p>
+                                            <p className="text-xs text-muted-foreground">
+                                                {new Date(demande.dateCreation).toLocaleDateString()}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${demande.statut === 'APPROUVEE' ? 'bg-green-100 text-green-700' :
+                                                demande.statut === 'REJETEE' ? 'bg-red-100 text-red-700' :
+                                                    'bg-yellow-100 text-yellow-700'
+                                            }`}>
+                                            {demande.statut}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <Button
+                            variant="link"
+                            className="w-full mt-4 text-sm"
+                            onClick={() => navigate('/requests')}
+                        >
+                            Voir toutes les demandes
+                        </Button>
+                    </CardContent>
+                </Card>
+            )}
+        </div>
     );
-  }
-
-  return (
-    <div className="space-y-6">
-
-      <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">
-            Bonjour, {user?.name}
-          </h1>
-          <p className="text-muted-foreground">
-            Voici un aperçu de vos activités
-            {statsLoading && " (chargement en cours...)"}
-          </p>
-        </div>
-        <div className="flex space-x-2">
-          <Button onClick={() => navigate('/requests/new')} size="sm">
-            <FileText className="w-4 h-4 mr-2" />
-            Nouvelle demande
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {roleStats.map((stat, index) => {
-          const Icon = stat.icon;
-          const isLoading = statsLoading;
-          
-          return (
-            <Card key={index} className={`${stat.urgent ? 'border-orange-200 shadow-orange-100 dark:border-orange-800' : ''}`}>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  {stat.title}
-                </CardTitle>
-                <div className={`p-2 rounded-full ${
-                  stat.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900' :
-                  stat.color === 'green' ? 'bg-green-100 dark:bg-green-900' :
-                  stat.color === 'orange' ? 'bg-orange-100 dark:bg-orange-900' :
-                  stat.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900' :
-                  stat.color === 'indigo' ? 'bg-indigo-100 dark:bg-indigo-900' :
-                  'bg-red-100 dark:bg-red-900'
-                }`}>
-                  <Icon className={`w-4 h-4 ${
-                    stat.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
-                    stat.color === 'green' ? 'text-green-600 dark:text-green-400' :
-                    stat.color === 'orange' ? 'text-orange-600 dark:text-orange-400' :
-                    stat.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
-                    stat.color === 'indigo' ? 'text-indigo-600 dark:text-indigo-400' :
-                    'text-red-600 dark:text-red-400'
-                  }`} />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-foreground">
-                  {isLoading ? "..." : stat.value}
-                </div>
-                <p className="text-xs text-muted-foreground">{stat.description}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-
-      
-    </div>
-  );
 };
 
 export default Dashboard;

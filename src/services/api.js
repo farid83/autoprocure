@@ -1,4 +1,5 @@
 import axios from "axios";
+import Dashboard from "../pages/Dashboard";
 
 /**
  * Service API pour communiquer avec le Backend Symfony.
@@ -59,8 +60,12 @@ api.interceptors.response.use(
         return response.data;
     },
     (error) => {
-        // On rejette la promesse pour que le bloc catch du composant fonctionne
-        // On essaie de récupérer le message d'erreur du backend s'il existe
+        // Si on reçoit une erreur 401 (Unauthorized), le token est probablement expiré
+        if (error.response && error.response.status === 401) {
+            console.warn("Session expirée (401), déconnexion automatique...");
+            window.dispatchEvent(new CustomEvent("auth:logout"));
+        }
+
         const message = error.response?.data?.message || error.message;
         return Promise.reject(message);
     }
@@ -75,6 +80,11 @@ export async function login(email, password) {
 
 export async function register(email, password) {
     return api.post("/register", { email, password });
+}
+
+// --- Endpoints Dashboard ---
+export async function dashboard() {
+    return api.get("/dashboard");
 }
 
 // --- Endpoints Articles ---

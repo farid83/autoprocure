@@ -25,6 +25,14 @@ export const AuthProvider = ({ children }) => {
             }
         }
         setIsCheckingSession(false);
+
+        // Écouter l'événement de déconnexion globale (ex: token expiré)
+        const handleLogout = () => logoutAction();
+        window.addEventListener("auth:logout", handleLogout);
+
+        return () => {
+            window.removeEventListener("auth:logout", handleLogout);
+        };
     }, []);
 
     const login = async (email, password) => {
@@ -71,6 +79,11 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+    const hasAnyRole = (roles) => {
+        if (!user || !user.roles) return false;
+        return roles.some(role => user.roles.includes(role));
+    };
+
     return (
         <AuthContext.Provider value={{
             user,
@@ -80,7 +93,8 @@ export const AuthProvider = ({ children }) => {
             isLoading,
             isCheckingSession,
             error,
-            clearError
+            clearError,
+            hasAnyRole
         }}>
             {!isCheckingSession && children}
         </AuthContext.Provider>
