@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mise à jour de votre demande</title>
+</head>
+<body>
+    <h1>Mise à jour de votre demande #{{ demande.id }}</h1>
+    <p>Bonjour {{ user.nom }},</p>
+    <p>Votre demande de matériel #{{ demande.id }} a été <strong>{{ demande.statut }}</strong>.</p>
+    
+    {% if demande.statut == 'approuvée' %}
+        <p>Les matériels suivants vous ont été accordés :</p>
+        <ul>
+            {% for item in demande.demandeMateriels %}
+                <li>{{ item.materiel.nom }} (Quantité accordée : {{ item.quantiteAccordee }})</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if demande.commentaireApprobation %}
+        <p><strong>Commentaire :</strong> {{ demande.commentaireApprobation }}</p>
+    {% endif %}
+
+    <p>Cordialement,<br>Système de Gestion d'Inventaire</p>
+</body>
+</html>

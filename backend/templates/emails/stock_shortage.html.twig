@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Alerte Stock</title>
+</head>
+<body>
+    <h1>Alerte Stock : {{ materiel.nom }}</h1>
+    <p>Bonjour {{ user.nom }},</p>
+    <p>Le matériel <strong>{{ materiel.nom }}</strong> a atteint son seuil d'alerte.</p>
+    <ul>
+        <li><strong>Quantité disponible :</strong> {{ materiel.quantiteDisponible }}</li>
+        <li><strong>Seuil d'alerte :</strong> {{ materiel.seuilAlerte }}</li>
+        <li><strong>État :</strong> {{ materiel.etat }}</li>
+    </ul>
+    <p>Veuillez prendre les mesures nécessaires pour réapprovisionner le stock.</p>
+    <p>Cordialement,<br>Système de Gestion d'Inventaire</p>
+</body>
+</html>

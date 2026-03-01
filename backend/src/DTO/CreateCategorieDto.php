@@ -1,0 +1,14 @@
+<?php
+
+namespace App\DTO;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class CreateCategorieDto
+{
+    public function __construct(
+        #[Assert\NotBlank]
+        public readonly string $nom,
+    ) {
+    }
+}
