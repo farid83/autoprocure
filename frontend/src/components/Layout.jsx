@@ -14,6 +14,16 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { useAuth } from '../context/AuthContext';
 
+// Menu items avec rôles Symfony
+const menuItems = [
+    { icon: Home, label: 'Dashboard', path: '/dashboard', roles: ['ROLE_USER', 'ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
+    { icon: Package, label: 'Matériels', path: '/materials', roles: ['ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
+    { icon: Layers, label: 'Catégories', path: '/categories', roles: ['ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
+    { icon: FileText, label: 'Demandes', path: '/requests', roles: ['ROLE_USER', 'ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
+    { icon: CheckSquare, label: 'Validations', path: '/validations', roles: ['ROLE_ADMIN'] },
+    { icon: Users, label: 'Utilisateurs', path: '/users', roles: ['ROLE_ADMIN'] },
+];
+
 const Layout = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,16 +32,6 @@ const Layout = () => {
     // État pour le mode sombre et le menu mobile
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    // Menu items avec rôles Symfony
-    const menuItems = [
-        { icon: Home, label: 'Dashboard', path: '/dashboard', roles: ['ROLE_USER', 'ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
-        { icon: Package, label: 'Matériels', path: '/materials', roles: ['ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
-        { icon: Layers, label: 'Catégories', path: '/categories', roles: ['ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
-        { icon: FileText, label: 'Demandes', path: '/requests', roles: ['ROLE_USER', 'ROLE_COMPTABLE_MATIERE', 'ROLE_ADMIN'] },
-        { icon: CheckSquare, label: 'Validations', path: '/validations', roles: ['ROLE_ADMIN'] },
-        { icon: Users, label: 'Utilisateurs', path: '/users', roles: ['ROLE_ADMIN'] },
-    ];
 
     const visibleMenuItems = useMemo(() => {
         if (!user) return [];
@@ -48,7 +48,7 @@ const Layout = () => {
         document.documentElement.classList.toggle('dark', !isDarkMode);
     };
 
-    const SidebarContent = ({ mobile = false }) => (
+    const renderSidebarContent = (mobile = false) => (
         <div className="flex flex-col h-full bg-card">
             {/* Logo */}
             <div className="p-6 border-b border-border">
@@ -110,13 +110,13 @@ const Layout = () => {
         <div className={`min-h-screen bg-background flex ${isDarkMode ? 'dark' : ''}`}>
             {/* Sidebar Desktop */}
             <aside className="hidden lg:block w-64 bg-card border-r border-border shrink-0 sticky top-0 h-screen">
-                <SidebarContent />
+                {renderSidebarContent()}
             </aside>
 
             {/* Mobile Sidebar */}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetContent side="left" className="p-0 w-64 border-r-0">
-                    <SidebarContent mobile />
+                    {renderSidebarContent(true)}
                 </SheetContent>
             </Sheet>
 
