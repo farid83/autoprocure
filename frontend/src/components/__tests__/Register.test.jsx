@@ -47,7 +47,7 @@ describe('Register Component', () => {
         const submitButton = screen.getByRole('button', { name: /S'inscrire/i });
 
         // Act
-        fireEvent.click(submitButton);
+        fireEvent.submit(submitButton.closest('form'));
 
         // Assert
         expect(await screen.findByText('Le nom est requis')).toBeInTheDocument();
@@ -66,10 +66,10 @@ describe('Register Component', () => {
         const submitButton = screen.getByRole('button', { name: /S'inscrire/i });
 
         // Act
-        fireEvent.change(nameInput, { target: { value: 'Jean' } });
-        fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
-        fireEvent.change(passwordInput, { target: { value: 'weak' } });
-        fireEvent.click(submitButton);
+        fireEvent.change(nameInput, { target: { name: 'nom', value: 'Jean' } });
+        fireEvent.change(emailInput, { target: { name: 'email', value: 'invalid-email' } });
+        fireEvent.change(passwordInput, { target: { name: 'password', value: 'weak' } });
+        fireEvent.submit(submitButton.closest('form'));
 
         // Assert
         expect(await screen.findByText('L\'email n\'est pas valide')).toBeInTheDocument();
@@ -87,11 +87,11 @@ describe('Register Component', () => {
         const submitButton = screen.getByRole('button', { name: /S'inscrire/i });
 
         // Act
-        fireEvent.change(nameInput, { target: { value: 'Jean Dupont' } });
-        fireEvent.change(emailInput, { target: { value: 'jean@example.com' } });
-        fireEvent.change(passwordInput, { target: { value: 'StrongP@ssw0rd' } });
-        fireEvent.change(confirmPasswordInput, { target: { value: 'DifferentP@ssw0rd' } });
-        fireEvent.click(submitButton);
+        fireEvent.change(nameInput, { target: { name: 'nom', value: 'Jean Dupont' } });
+        fireEvent.change(emailInput, { target: { name: 'email', value: 'jean@example.com' } });
+        fireEvent.change(passwordInput, { target: { name: 'password', value: 'StrongP@ssw0rd' } });
+        fireEvent.change(confirmPasswordInput, { target: { name: 'passwordConfirmation', value: 'DifferentP@ssw0rd' } });
+        fireEvent.submit(submitButton.closest('form'));
 
         // Assert
         expect(await screen.findByText("Les mots de passe ne correspondent pas")).toBeInTheDocument();
@@ -109,11 +109,11 @@ describe('Register Component', () => {
         const submitButton = screen.getByRole('button', { name: /S'inscrire/i });
 
         // Act
-        fireEvent.change(nameInput, { target: { value: 'Jean Dupont' } });
-        fireEvent.change(emailInput, { target: { value: 'jean@example.com' } });
-        fireEvent.change(passwordInput, { target: { value: 'StrongP@ssw0rd!' } });
-        fireEvent.change(confirmPasswordInput, { target: { value: 'StrongP@ssw0rd!' } });
-        fireEvent.click(submitButton);
+        fireEvent.change(nameInput, { target: { name: 'nom', value: 'Jean Dupont' } });
+        fireEvent.change(emailInput, { target: { name: 'email', value: 'jean@example.com' } });
+        fireEvent.change(passwordInput, { target: { name: 'password', value: 'StrongP@ssw0rd!' } });
+        fireEvent.change(confirmPasswordInput, { target: { name: 'passwordConfirmation', value: 'StrongP@ssw0rd!' } });
+        fireEvent.submit(submitButton.closest('form'));
 
         // Assert
         expect(await screen.findByText(/Inscription réussie !/)).toBeInTheDocument();
@@ -145,11 +145,11 @@ describe('Register Component', () => {
         const submitButton = screen.getByRole('button', { name: /S'inscrire/i });
 
         // Act
-        fireEvent.change(nameInput, { target: { value: 'Jean Dupont' } });
-        fireEvent.change(emailInput, { target: { value: 'used@example.com' } });
-        fireEvent.change(passwordInput, { target: { value: 'StrongP@ssw0rd!' } });
-        fireEvent.change(confirmPasswordInput, { target: { value: 'StrongP@ssw0rd!' } });
-        fireEvent.click(submitButton);
+        fireEvent.change(nameInput, { target: { name: 'nom', value: 'Jean Dupont' } });
+        fireEvent.change(emailInput, { target: { name: 'email', value: 'used@example.com' } });
+        fireEvent.change(passwordInput, { target: { name: 'password', value: 'StrongP@ssw0rd!' } });
+        fireEvent.change(confirmPasswordInput, { target: { name: 'passwordConfirmation', value: 'StrongP@ssw0rd!' } });
+        fireEvent.submit(submitButton.closest('form'));
 
         // Assert
         expect(await screen.findByText('Cet email est déjà utilisé')).toBeInTheDocument();
@@ -168,11 +168,11 @@ describe('Register Component', () => {
         const submitButton = screen.getByRole('button', { name: /S'inscrire/i });
 
         // Act
-        fireEvent.change(nameInput, { target: { value: 'Jean Dupont' } });
-        fireEvent.change(emailInput, { target: { value: 'jean@example.com' } });
-        fireEvent.change(passwordInput, { target: { value: 'StrongP@ssw0rd!' } });
-        fireEvent.change(confirmPasswordInput, { target: { value: 'StrongP@ssw0rd!' } });
-        fireEvent.click(submitButton);
+        fireEvent.change(nameInput, { target: { name: 'nom', value: 'Jean Dupont' } });
+        fireEvent.change(emailInput, { target: { name: 'email', value: 'jean@example.com' } });
+        fireEvent.change(passwordInput, { target: { name: 'password', value: 'StrongP@ssw0rd!' } });
+        fireEvent.change(confirmPasswordInput, { target: { name: 'passwordConfirmation', value: 'StrongP@ssw0rd!' } });
+        fireEvent.submit(submitButton.closest('form'));
 
         // Assert
         expect(await screen.findByText('Erreur interne du serveur')).toBeInTheDocument();

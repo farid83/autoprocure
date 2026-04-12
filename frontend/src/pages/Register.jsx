@@ -163,7 +163,7 @@ const Register = () => {
                         <CardDescription className="text-center">Remplissez le formulaire ci-dessous</CardDescription>
                     </CardHeader>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} noValidate>
                         <CardContent className="space-y-4">
                             {/* Message d'erreur général */}
                             {errors.general && (
