@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
   <parameters>
-    <parameter key="kernel.project_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</parameter>
+    <parameter key="kernel.project_dir">/var/www/html</parameter>
     <parameter key="kernel.environment">dev</parameter>
     <parameter key="kernel.runtime_environment">%env(default:kernel.environment:APP_RUNTIME_ENV)%</parameter>
     <parameter key="kernel.runtime_mode">%env(query_string:default:container.runtime_mode:APP_RUNTIME_MODE)%</parameter>
@@ -9,9 +9,9 @@
     <parameter key="kernel.runtime_mode.cli">%env(not:default:kernel.runtime_mode.web:)%</parameter>
     <parameter key="kernel.runtime_mode.worker">%env(bool:default::key:worker:default:kernel.runtime_mode:)%</parameter>
     <parameter key="kernel.debug">true</parameter>
-    <parameter key="kernel.build_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev</parameter>
-    <parameter key="kernel.cache_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev</parameter>
-    <parameter key="kernel.logs_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/var/log</parameter>
+    <parameter key="kernel.build_dir">/var/www/html/var/cache/dev</parameter>
+    <parameter key="kernel.cache_dir">/var/www/html/var/cache/dev</parameter>
+    <parameter key="kernel.logs_dir">/var/www/html/var/log</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
       <parameter key="DoctrineBundle">Doctrine\Bundle\DoctrineBundle\DoctrineBundle</parameter>
@@ -25,51 +25,51 @@
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\framework-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/symfony/framework-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\FrameworkBundle</parameter>
       </parameter>
       <parameter key="DoctrineBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\doctrine\doctrine-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/doctrine/doctrine-bundle</parameter>
         <parameter key="namespace">Doctrine\Bundle\DoctrineBundle</parameter>
       </parameter>
       <parameter key="DoctrineMigrationsBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\doctrine\doctrine-migrations-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/doctrine/doctrine-migrations-bundle</parameter>
         <parameter key="namespace">Doctrine\Bundle\MigrationsBundle</parameter>
       </parameter>
       <parameter key="MakerBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\maker-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/symfony/maker-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\MakerBundle</parameter>
       </parameter>
       <parameter key="SecurityBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\security-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/symfony/security-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\SecurityBundle</parameter>
       </parameter>
       <parameter key="LexikJWTAuthenticationBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\lexik\jwt-authentication-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/lexik/jwt-authentication-bundle</parameter>
         <parameter key="namespace">Lexik\Bundle\JWTAuthenticationBundle</parameter>
       </parameter>
       <parameter key="TwigBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\twig-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/symfony/twig-bundle</parameter>
         <parameter key="namespace">Symfony\Bundle\TwigBundle</parameter>
       </parameter>
       <parameter key="TwigExtraBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\twig\extra-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/twig/extra-bundle</parameter>
         <parameter key="namespace">Twig\Extra\TwigExtraBundle</parameter>
       </parameter>
       <parameter key="NelmioCorsBundle" type="collection">
-        <parameter key="path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\nelmio\cors-bundle</parameter>
+        <parameter key="path">/var/www/html/vendor/nelmio/cors-bundle</parameter>
         <parameter key="namespace">Nelmio\CorsBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
     <parameter key="kernel.container_class">App_KernelDevDebugContainer</parameter>
-    <parameter key="kernel.share_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/var/share/dev</parameter>
+    <parameter key="kernel.share_dir">/var/www/html/var/share/dev</parameter>
     <parameter key=".container.known_envs" type="collection">
       <parameter>dev</parameter>
       <parameter>test</parameter>
       <parameter>prod</parameter>
     </parameter>
-    <parameter key=".kernel.config_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/config</parameter>
+    <parameter key=".kernel.config_dir">/var/www/html/config</parameter>
     <parameter key=".kernel.bundles_definition" type="collection">
       <parameter key="Symfony\Bundle\FrameworkBundle\FrameworkBundle" type="collection">
         <parameter key="all">true</parameter>
@@ -130,17 +130,17 @@
     <parameter key="kernel.trusted_headers">%env(default::SYMFONY_TRUSTED_HEADERS)%</parameter>
     <parameter key="debug.file_link_format">%env(default::SYMFONY_IDE)%</parameter>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
-    <parameter key="debug.container.dump">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/App_KernelDevDebugContainer.xml</parameter>
+    <parameter key="debug.container.dump">/var/www/html/var/cache/dev/App_KernelDevDebugContainer.xml</parameter>
     <parameter key="router.request_context.host">localhost</parameter>
     <parameter key="router.request_context.scheme">http</parameter>
     <parameter key="router.request_context.base_url"/>
     <parameter key="router.resource">kernel::loadRoutes</parameter>
-    <parameter key="router.cache_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev</parameter>
+    <parameter key="router.cache_dir">/var/www/html/var/cache/dev</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
-    <parameter key="serializer.mapping.cache.file">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/serialization.php</parameter>
+    <parameter key="serializer.mapping.cache.file">/var/www/html/var/cache/dev/serialization.php</parameter>
     <parameter key=".serializer.named_serializers" type="collection"/>
-    <parameter key="cache.prefix.seed">_C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend.App_KernelDevDebugContainer</parameter>
+    <parameter key="cache.prefix.seed">_/var/www/html.App_KernelDevDebugContainer</parameter>
     <parameter key="session.metadata.storage_key">_sf2_meta</parameter>
     <parameter key="session.storage.options" type="collection">
       <parameter key="cache_limiter" type="string">0</parameter>
@@ -150,7 +150,7 @@
     </parameter>
     <parameter key="session.save_path">null</parameter>
     <parameter key="session.metadata.update_threshold">0</parameter>
-    <parameter key="validator.mapping.cache.file">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/validation.php</parameter>
+    <parameter key="validator.mapping.cache.file">/var/www/html/var/cache/dev/validation.php</parameter>
     <parameter key="validator.translation_domain">validators</parameter>
     <parameter key="data_collector.templates" type="collection"/>
     <parameter key="doctrine.entity_managers" type="collection">
@@ -202,7 +202,7 @@
     <parameter key="twig.form.resources" type="collection">
       <parameter>form_div_layout.html.twig</parameter>
     </parameter>
-    <parameter key="twig.default_path">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/templates</parameter>
+    <parameter key="twig.default_path">/var/www/html/templates</parameter>
     <parameter key="nelmio_cors.map" type="collection">
       <parameter key="^/" type="collection"/>
     </parameter>
@@ -512,7 +512,7 @@
       </argument>
     </service>
     <service id="http_cache.store" class="Symfony\Component\HttpKernel\HttpCache\Store">
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/var/share/dev/http_cache</argument>
+      <argument>/var/www/html/var/share/dev/http_cache</argument>
     </service>
     <service id="url_helper" class="Symfony\Component\HttpFoundation\UrlHelper">
       <argument type="service" id="request_stack"/>
@@ -522,7 +522,7 @@
       <tag name="container.no_preload"/>
       <argument type="tagged_iterator" tag="kernel.cache_warmer"/>
       <argument>true</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/App_KernelDevDebugContainerDeprecations.log</argument>
+      <argument>/var/www/html/var/cache/dev/App_KernelDevDebugContainerDeprecations.log</argument>
     </service>
     <service id="cache_clearer" class="Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer">
       <argument type="tagged_iterator" tag="kernel.cache_clearer"/>
@@ -741,7 +741,7 @@
       </argument>
       <argument>UTF-8</argument>
       <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
+      <argument>/var/www/html</argument>
       <argument type="service">
         <service>
           <argument type="service" id="request_stack"/>
@@ -784,7 +784,7 @@
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="filesystem"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
+      <argument>/var/www/html</argument>
       <call method="setName">
         <argument>assets:install</argument>
       </call>
@@ -964,7 +964,7 @@
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
       <argument>dev</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
+      <argument>/var/www/html</argument>
       <call method="setName">
         <argument>debug:dotenv</argument>
       </call>
@@ -1149,9 +1149,9 @@
     <service id="cache.app" class="Symfony\Component\Cache\Adapter\FilesystemAdapter" public="true">
       <tag name="cache.pool" pruneable="true"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>p0oeEB48kl</argument>
+      <argument>yU+7Ob58gJ</argument>
       <argument>0</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/var/share/dev/pools/app</argument>
+      <argument>/var/www/html/var/share/dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -1164,40 +1164,40 @@
     <service id="cache.system" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>7WlHaZCjBF</argument>
+      <argument>XUZWh3oCfH</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.validator" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>h1vht-4NG1</argument>
+      <argument>-ZPlc8xhwu</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.serializer" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>+n36xQzBrT</argument>
+      <argument>8vUMbijCz2</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
     <service id="cache.property_info" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>LFN8O5r9IQ</argument>
+      <argument>vHyQ8yH4Hf</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1207,7 +1207,7 @@
       <argument/>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1226,7 +1226,7 @@
       <tag name="monolog.logger" channel="cache"/>
       <argument/>
       <argument>0</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/var/share/dev/pools/app</argument>
+      <argument>/var/www/html/var/share/dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -1964,7 +1964,7 @@
       <argument type="service" id=".service_locator.TVmQFtt.router.default"/>
       <argument>kernel::loadRoutes</argument>
       <argument type="collection">
-        <argument key="cache_dir">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev</argument>
+        <argument key="cache_dir">/var/www/html/var/cache/dev</argument>
         <argument key="debug">true</argument>
         <argument key="generator_class">Symfony\Component\Routing\Generator\CompiledUrlGenerator</argument>
         <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper</argument>
@@ -2015,7 +2015,7 @@
       <argument type="service" id="request_stack"/>
       <argument type="service" id="router.request_context" on-invalid="ignore"/>
       <argument type="service" id="logger" on-invalid="ignore"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
+      <argument>/var/www/html</argument>
       <argument>true</argument>
     </service>
     <service id="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" class="Symfony\Bundle\FrameworkBundle\Controller\RedirectController" public="true">
@@ -2042,7 +2042,7 @@
       <argument type="service" id="property_info.reflection_extractor" on-invalid="null"/>
     </service>
     <service id="secrets.vault" class="Symfony\Bundle\FrameworkBundle\Secrets\SodiumVault">
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
+      <argument>/var/www/html/config/secrets/%env(default:kernel.environment:APP_RUNTIME_ENV)%</argument>
       <argument type="service" id="secrets.decryption_key" on-invalid="ignore"/>
       <argument>APP_SECRET</argument>
     </service>
@@ -2055,7 +2055,7 @@
       <argument>base64:default::SYMFONY_DECRYPTION_SECRET</argument>
     </service>
     <service id="secrets.local_vault" class="Symfony\Bundle\FrameworkBundle\Secrets\DotenvVault">
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/.env.dev.local</argument>
+      <argument>/var/www/html/.env.dev.local</argument>
     </service>
     <service id="serializer" class="Symfony\Component\Serializer\Serializer">
       <argument type="collection">
@@ -2185,10 +2185,10 @@
       <argument type="collection">
         <argument type="service" id="serializer.mapping.attribute_loader"/>
       </argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/serialization.php</argument>
+      <argument>/var/www/html/var/cache/dev/serialization.php</argument>
     </service>
     <service id="serializer.mapping.cache.symfony" class="Psr\Cache\CacheItemPoolInterface">
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/serialization.php</argument>
+      <argument>/var/www/html/var/cache/dev/serialization.php</argument>
       <argument type="service" id="cache.serializer"/>
       <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
     </service>
@@ -2368,7 +2368,7 @@
       <argument>true</argument>
     </service>
     <service id="session.storage.factory.mock_file" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorageFactory">
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/sessions</argument>
+      <argument>/var/www/html/var/cache/dev/sessions</argument>
       <argument>MOCKSESSID</argument>
       <argument type="service">
         <service class="Symfony\Component\HttpFoundation\Session\Storage\MetadataBag">
@@ -2453,10 +2453,10 @@
     <service id="validator.mapping.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\ValidatorCacheWarmer">
       <tag name="kernel.cache_warmer"/>
       <argument type="service" id="validator.builder"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/validation.php</argument>
+      <argument>/var/www/html/var/cache/dev/validation.php</argument>
     </service>
     <service id="validator.mapping.cache.adapter" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" constructor="create">
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/validation.php</argument>
+      <argument>/var/www/html/var/cache/dev/validation.php</argument>
       <argument type="service" id="cache.validator"/>
     </service>
     <service id="validator.validator_factory" class="Symfony\Component\Validator\ContainerConstraintValidatorFactory">
@@ -2748,10 +2748,10 @@
     <service id="cache.validator_expression_language" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>mVJUTRV5pp</argument>
+      <argument>lZuR8vP0Z4</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -3325,7 +3325,7 @@
     </service>
     <service id="doctrine.orm.default_attribute_metadata_driver" class="Doctrine\ORM\Mapping\Driver\AttributeDriver">
       <argument type="collection">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\src\Entity</argument>
+        <argument>/var/www/html/src/Entity</argument>
       </argument>
     </service>
     <service id="cache.doctrine.orm.default.metadata" class="Symfony\Component\Cache\Adapter\ArrayAdapter"/>
@@ -3386,7 +3386,7 @@
     <service id="doctrine.migrations.configuration" class="Doctrine\Migrations\Configuration\Configuration">
       <call method="addMigrationsDirectory">
         <argument>DoctrineMigrations</argument>
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/migrations</argument>
+        <argument>/var/www/html/migrations</argument>
       </call>
       <call method="setAllOrNothing">
         <argument>false</argument>
@@ -3571,8 +3571,8 @@
       <argument type="service" id="filesystem"/>
       <argument type="service" id="maker.autoloader_util"/>
       <argument type="service" id="maker.file_link_formatter"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/templates</argument>
+      <argument>/var/www/html</argument>
+      <argument>/var/www/html/templates</argument>
     </service>
     <service id="maker.autoloader_finder" class="Symfony\Bundle\MakerBundle\Util\ComposerAutoloaderFinder">
       <argument>App</argument>
@@ -3749,7 +3749,7 @@
     </service>
     <service id="maker.maker.make_migration" class="Symfony\Bundle\MakerBundle\Maker\MakeMigration">
       <tag name="maker.command"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
+      <argument>/var/www/html</argument>
       <argument type="service" id="maker.file_link_formatter"/>
     </service>
     <service id="maker.maker.make_stimulus_controller" class="Symfony\Bundle\MakerBundle\Maker\MakeStimulusController">
@@ -3922,10 +3922,10 @@
     <service id="cache.security_expression_language" class="Symfony\Component\Cache\Adapter\AdapterInterface">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>z+gYDf-nBX</argument>
+      <argument>1syEEx1PF-</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -3941,10 +3941,10 @@
     <service id="cache.security_is_granted_attribute_expression_language" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>7r12sDdeyW</argument>
+      <argument>V28qWVnEQj</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -3954,10 +3954,10 @@
     <service id="cache.security_is_csrf_token_valid_attribute_expression_language" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="true">
       <tag name="cache.pool" pruneable="false"/>
       <tag name="kernel.reset" method="reset"/>
-      <argument>SA7CGVSbi8</argument>
+      <argument>kM+DLXn9AK</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/pools/system</argument>
+      <argument>/var/www/html/var/cache/dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -4843,7 +4843,7 @@
       <tag name="kernel.reset" method="?resetGlobals"/>
       <argument type="service" id="twig.loader.native_filesystem"/>
       <argument type="collection">
-        <argument key="cache">C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\var\cache\dev/twig</argument>
+        <argument key="cache">/var/www/html/var/cache/dev/twig</argument>
         <argument key="charset">UTF-8</argument>
         <argument key="debug">true</argument>
         <argument key="strict_variables">true</argument>
@@ -4944,9 +4944,9 @@
     <service id="twig.template_iterator" class="Symfony\Bundle\TwigBundle\TemplateIterator">
       <argument type="service" id="kernel"/>
       <argument type="collection">
-        <argument key="C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\twig-bridge/Resources/views/Email">email</argument>
+        <argument key="/var/www/html/vendor/symfony/twig-bridge/Resources/views/Email">email</argument>
       </argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/templates</argument>
+      <argument>/var/www/html/templates</argument>
       <argument type="collection">
         <argument>*.twig</argument>
       </argument>
@@ -4961,48 +4961,48 @@
     <service id="twig.loader.native_filesystem" class="Twig\Loader\FilesystemLoader">
       <tag name="twig.loader"/>
       <argument type="collection"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
+      <argument>/var/www/html</argument>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\doctrine\doctrine-bundle/templates</argument>
+        <argument>/var/www/html/vendor/doctrine/doctrine-bundle/templates</argument>
         <argument>Doctrine</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\doctrine\doctrine-bundle/templates</argument>
+        <argument>/var/www/html/vendor/doctrine/doctrine-bundle/templates</argument>
         <argument>!Doctrine</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\doctrine\doctrine-migrations-bundle/templates</argument>
+        <argument>/var/www/html/vendor/doctrine/doctrine-migrations-bundle/templates</argument>
         <argument>DoctrineMigrations</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\doctrine\doctrine-migrations-bundle/templates</argument>
+        <argument>/var/www/html/vendor/doctrine/doctrine-migrations-bundle/templates</argument>
         <argument>!DoctrineMigrations</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\maker-bundle/templates</argument>
+        <argument>/var/www/html/vendor/symfony/maker-bundle/templates</argument>
         <argument>Maker</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\maker-bundle/templates</argument>
+        <argument>/var/www/html/vendor/symfony/maker-bundle/templates</argument>
         <argument>!Maker</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\security-bundle/Resources/views</argument>
+        <argument>/var/www/html/vendor/symfony/security-bundle/Resources/views</argument>
         <argument>Security</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\security-bundle/Resources/views</argument>
+        <argument>/var/www/html/vendor/symfony/security-bundle/Resources/views</argument>
         <argument>!Security</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/templates</argument>
+        <argument>/var/www/html/templates</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\twig-bridge/Resources/views/Email</argument>
+        <argument>/var/www/html/vendor/symfony/twig-bridge/Resources/views/Email</argument>
         <argument>email</argument>
       </call>
       <call method="addPath">
-        <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend\vendor\symfony\twig-bridge/Resources/views/Email</argument>
+        <argument>/var/www/html/vendor/symfony/twig-bridge/Resources/views/Email</argument>
         <argument>!email</argument>
       </call>
     </service>
@@ -5095,9 +5095,9 @@
       <tag name="console.command"/>
       <tag name="container.no_preload"/>
       <argument type="service" id="twig"/>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend</argument>
+      <argument>/var/www/html</argument>
       <argument>%kernel.bundles_metadata%</argument>
-      <argument>C:\Users\ANFAR-Tech\.gemini\antigravity\scratch\inventory_api\backend/templates</argument>
+      <argument>/var/www/html/templates</argument>
       <argument type="service" id="debug.file_link_formatter" on-invalid="null"/>
       <call method="setName">
         <argument>debug:twig</argument>

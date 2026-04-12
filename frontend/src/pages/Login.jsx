@@ -7,7 +7,6 @@ import { Label } from '../components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/card';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { useAuth } from '../context/AuthContext';
-import { useQueryClient } from '@tanstack/react-query';
 // import { queryKeys } from '../hooks/useApi';
 
 const Login = () => {
@@ -19,7 +18,7 @@ const Login = () => {
 
     useEffect(() => {
         clearError();
-    }, []);
+    }, [clearError]);
 
     if (isAuthenticated) {
         return <Navigate to="/dashboard" replace />;

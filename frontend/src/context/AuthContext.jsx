@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect, useContext } from "react";
 import * as api from "../services/api";
 
@@ -69,7 +70,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
             setUser({ email: payload.username, roles: payload.roles });
-        } catch (e) {
+        } catch {
             setUser({ email: "Utilisateur" });
         }
     };

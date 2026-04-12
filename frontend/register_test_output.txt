@@ -1,0 +1,133 @@
+﻿
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.4 [39m[90mC:/Users/ANFAR-Tech/.gemini/antigravity/scratch/inventory_api/frontend[39m
+
+[90mstdout[2m | src/components/__tests__/Register.test.jsx[2m > [22m[2mRegister Component[2m > [22m[2msubmits form successfully and shows success message
+[22m[39mresponse { data: { message: [32m'Success'[39m } }
+
+node.exe : [90mstderr[2m | src/components/__tests__/Register.test.jsx[2m > [22m[2mRegister Component[2m > 
+[22m[2mhandles server-side validation errors correctly
+Au caractère Ligne:1 : 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([90mstderr[2m...rrors correctly:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[22m[39mErreur lors de l'inscription: { errors: { email: [32m'Cet email est d├®j├á utilis├®'[39m } }
+
+[90mstderr[2m | src/components/__tests__/Register.test.jsx[2m > [22m[2mRegister Component[2m > [22m[2mhandles 
+general API errors correctly
+[22m[39mErreur lors de l'inscription: { message: [32m'Erreur interne du serveur'[39m }
+
+ [31mÔØ»[39m src/components/__tests__/Register.test.jsx [2m([22m[2m7 tests[22m[2m | [22m[31m6 failed[39m[2m)[22m[33m 30672[2mms[22m[39m
+     [33m[2mÔ£ô[22m[39m renders the register form correctly [33m 589[2mms[22m[39m
+[31m     [31m├ù[31m shows validation errors when form is submitted empty[39m[33m 5015[2mms[22m[39m
+[31m     [31m├ù[31m shows validation error for invalid email and weak password[39m[33m 5009[2mms[22m[39m
+[31m     [31m├ù[31m shows validation error for mismatched passwords[39m[33m 5009[2mms[22m[39m
+[31m     [31m├ù[31m submits form successfully and shows success message[39m[33m 5013[2mms[22m[39m
+[31m     [31m├ù[31m handles server-side validation errors correctly[39m[33m 5010[2mms[22m[39m
+[31m     [31m├ù[31m handles general API errors correctly[39m[33m 5014[2mms[22m[39m
+
+[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m[1m[41m Failed Tests 6 [49m[22m[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+
+[41m[1m FAIL [22m[49m src/components/__tests__/Register.test.jsx[2m > [22mRegister Component[2m > [22mshows 
+validation errors when form is submitted empty
+[31m[1mError[22m: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with 
+"testTimeout".[39m
+[36m [2mÔØ»[22m src/components/__tests__/Register.test.jsx:[2m49:5[22m[39m
+    [90m 47|[39m     })[33m;[39m
+    [90m 48|[39m
+    [90m 49|[39m     it('shows validation errors when form is submitted empty', async (ÔÇª
+    [90m   |[39m     [31m^[39m
+    [90m 50|[39m         [90m// Arrange[39m
+    [90m 51|[39m         [34mrender[39m([33m<[39m[33mRegister[39m [33m/[39m[33m>[39m[33m,[39m { 
+wrapper[33m:[39m [33mBrowserRouter[39m })[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/6]ÔÄ»[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/__tests__/Register.test.jsx[2m > [22mRegister Component[2m > [22mshows 
+validation error for invalid email and weak password
+[31m[1mError[22m: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with 
+"testTimeout".[39m
+[36m [2mÔØ»[22m src/components/__tests__/Register.test.jsx:[2m65:5[22m[39m
+    [90m 63|[39m     })[33m;[39m
+    [90m 64|[39m
+    [90m 65|[39m     it('shows validation error for invalid email and weak password', aÔÇª
+    [90m   |[39m     [31m^[39m
+    [90m 66|[39m         [90m// Arrange[39m
+    [90m 67|[39m         [34mrender[39m([33m<[39m[33mRegister[39m [33m/[39m[33m>[39m[33m,[39m { 
+wrapper[33m:[39m [33mBrowserRouter[39m })[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/6]ÔÄ»[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/__tests__/Register.test.jsx[2m > [22mRegister Component[2m > [22mshows 
+validation error for mismatched passwords
+[31m[1mError[22m: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with 
+"testTimeout".[39m
+[36m [2mÔØ»[22m src/components/__tests__/Register.test.jsx:[2m85:5[22m[39m
+    [90m 83|[39m     })[33m;[39m
+    [90m 84|[39m
+    [90m 85|[39m     [34mit[39m([32m'shows validation error for mismatched passwords'[39m[33m,[39m 
+[35masync[39m () [33m=>[39m {
+    [90m   |[39m     [31m^[39m
+    [90m 86|[39m         [90m// Arrange[39m
+    [90m 87|[39m         [34mrender[39m([33m<[39m[33mRegister[39m [33m/[39m[33m>[39m[33m,[39m { 
+wrapper[33m:[39m [33mBrowserRouter[39m })[33m;[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/6]ÔÄ»[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/__tests__/Register.test.jsx[2m > [22mRegister Component[2m > [22msubmits 
+form successfully and shows success message
+[31m[1mError[22m: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with 
+"testTimeout".[39m
+[36m [2mÔØ»[22m src/components/__tests__/Register.test.jsx:[2m106:5[22m[39m
+    [90m104|[39m     })[33m;[39m
+    [90m105|[39m
+    [90m106|[39m     it('submits form successfully and shows success message', async ()ÔÇª
+    [90m   |[39m     [31m^[39m
+    [90m107|[39m         [90m// Arrange[39m
+    [90m108|[39m         api.post.mockResolvedValueOnce({ data: { message: 'Success' } ÔÇª
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/6]ÔÄ»[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/__tests__/Register.test.jsx[2m > [22mRegister Component[2m > [22mhandles 
+server-side validation errors correctly
+[31m[1mError[22m: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with 
+"testTimeout".[39m
+[36m [2mÔØ»[22m src/components/__tests__/Register.test.jsx:[2m137:5[22m[39m
+    [90m135|[39m     })[33m;[39m
+    [90m136|[39m
+    [90m137|[39m     [34mit[39m([32m'handles server-side validation errors correctly'[39m[33m,[39m 
+[35masync[39m () [33m=>[39m {
+    [90m   |[39m     [31m^[39m
+    [90m138|[39m         [90m// Arrange[39m
+    [90m139|[39m         api[33m.[39mpost[33m.[39m[34mmockRejectedValueOnce[39m({
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/6]ÔÄ»[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/__tests__/Register.test.jsx[2m > [22mRegister Component[2m > [22mhandles 
+general API errors correctly
+[31m[1mError[22m: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with 
+"testTimeout".[39m
+[36m [2mÔØ»[22m src/components/__tests__/Register.test.jsx:[2m162:5[22m[39m
+    [90m160|[39m     })[33m;[39m
+    [90m161|[39m
+    [90m162|[39m     [34mit[39m([32m'handles general API errors correctly'[39m[33m,[39m [35masync[39m () 
+[33m=>[39m {
+    [90m   |[39m     [31m^[39m
+    [90m163|[39m         [90m// Arrange[39m
+    [90m164|[39m         api[33m.[39mpost[33m.[39m[34mmockRejectedValueOnce[39m({
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/6]ÔÄ»[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m6 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (7)[39m
+[2m   Start at [22m 04:44:18
+[2m   Duration [22m 38.25s[2m (transform 635ms, setup 1.16s, import 1.00s, tests 30.67s, environment 4.52s)[22m
+

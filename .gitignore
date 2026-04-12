@@ -1,5 +1,6 @@
 ###> symfony/framework-bundle ###
 /backend/.env.local
+/backend/.env
 /backend/.env.local.php
 /backend/.env.*.local
 /backend/config/secrets/prod/prod.decrypt.private.php
@@ -17,6 +18,7 @@
 /frontend/dist/
 /frontend/build/
 /frontend/.env.local
+/frontend/.env
 /frontend/.env.*.local
 
 # ===== IDE =====
@@ -24,3 +26,5 @@
 .vscode/
 *.swp
 .DS_Store
+
+dist/ 

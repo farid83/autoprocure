@@ -42,15 +42,21 @@ class DemandeController extends AbstractController
     ): JsonResponse {
         $demande = new Demande();
         $demande->setUtilisateur($this->getUser());
-        $demande->setStatut('en attente');
+
+        // Initial check for stock availability
+        $insufficientStock = false;
+        $rejectionDetails = [];
+        $itemsToPersist = [];
 
         foreach ($dto->items as $item) {
             $mat = $matRepo->find($item['materielId']);
             if (!$mat) {
                 return $this->json(['error' => 'Materiel not found: ' . $item['materielId']], 404);
             }
+
             if ($item['quantite'] > $mat->getQuantiteDisponible()) {
-                return $this->json(['error' => 'Quantity requested exceeds available for ' . $mat->getNom()], 400);
+                $insufficientStock = true;
+                $rejectionDetails[] = "{$mat->getNom()} (demandé: {$item['quantite']}, disponible: {$mat->getQuantiteDisponible()})";
             }
 
             $dm = new DemandeMateriel();
@@ -58,24 +64,37 @@ class DemandeController extends AbstractController
             $dm->setQuantiteDemandee($item['quantite']);
             $dm->setStatut('en attente');
             $demande->addDemandeMateriel($dm);
-            $em->persist($dm);
+            $itemsToPersist[] = $dm;
         }
 
+        if ($insufficientStock) {
+            $demande->setStatut('rejetée');
+            $statusLabel = "Rejet automatique (Stock insuffisant)";
+            $details = "Demande rejetée automatiquement pour stock insuffisant : " . implode(', ', $rejectionDetails);
+        } else {
+            $demande->setStatut('en attente');
+            $statusLabel = "Création";
+            $details = "Nouvelle demande par " . $this->getUser()->getUserIdentifier();
+        }
+
+        foreach ($itemsToPersist as $dm) {
+            $em->persist($dm);
+        }
         $em->persist($demande);
 
         $hist = new Historique();
-        $hist->setAction('Création');
+        $hist->setAction($statusLabel);
         $hist->setTargetEntity('Demande');
-        $hist->setDetails("Nouvelle demande par " . $this->getUser()->getUserIdentifier());
+        $hist->setDetails($details);
+        $hist->setDemande($demande);
         $em->persist($hist);
 
         $em->flush();
 
-        $hist->setDemande($demande); // Link after persist often works best if logic allows, or persist both.
-        $em->flush();
-
-        // Notify Admins and Comptables
-        $notificationService->sendNewRequestAlert($demande);
+        // Notify Admins and Comptables ONLY if demand is NOT rejected
+        if (!$insufficientStock) {
+            $notificationService->sendNewRequestAlert($demande);
+        }
 
         return $this->json($demande, 201, [], ['groups' => 'demande:read']);
     }

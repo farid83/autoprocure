@@ -1,0 +1,47 @@
+﻿node.exe : [1m[30m[41m MISSING DEPENDENCY [49m[39m[22m [31mCannot find dependency 'jsdom'
+Au caractère Ligne:1 : 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([1m[30m[41m ...endency 'jsdom':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.4 [39m[90mC:/Users/ANFAR-Tech/.gemini/antigravity/scratch/inventory_api/frontend[39m
+
+[39m[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m[1m[41m Unhandled Errors [49m[22m[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+[31m[1m
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.[22m[39m
+
+[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m[1m[41m Unhandled Error [49m[22m[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+[31m[1mError[22m: [vitest-pool]: Failed to start forks worker for test files 
+C:/Users/ANFAR-Tech/.gemini/antigravity/scratch/inventory_api/frontend/src/components/__tests__/Login.test.jsx.[39m
+[90m [2mÔØ»[22m node_modules/vitest/dist/chunks/cli-api.lDy4N9kC.js:[2m3448:94[22m[39m
+[90m [2mÔØ»[22m processTicksAndRejections node:internal/process/task_queues:[2m103:5[22m[39m
+[90m [2mÔØ»[22m Pool.schedule node_modules/vitest/dist/chunks/cli-api.lDy4N9kC.js:[2m3448:5[22m[39m
+
+[31m[1mCaused by: Error[22m: Cannot find package 'jsdom' imported from C:\Users\ANFAR-Tech\.gemini\antigravity\scrat
+ch\inventory_api\frontend\node_modules\vitest\dist\chunks\index.DC7d2Pf8.js[39m
+[90m [2mÔØ»[22m Object.getPackageJSONURL node:internal/modules/package_json_reader:[2m301:9[22m[39m
+[90m [2mÔØ»[22m packageResolve node:internal/modules/esm/resolve:[2m769:81[22m[39m
+[90m [2mÔØ»[22m moduleResolve node:internal/modules/esm/resolve:[2m860:18[22m[39m
+[90m [2mÔØ»[22m defaultResolve node:internal/modules/esm/resolve:[2m992:11[22m[39m
+[90m [2mÔØ»[22m #cachedDefaultResolve node:internal/modules/esm/loader:[2m719:20[22m[39m
+[90m [2mÔØ»[22m #resolveAndMaybeBlockOnLoaderThread node:internal/modules/esm/loader:[2m736:38[22m[39m
+[90m [2mÔØ»[22m ModuleLoader.resolveSync node:internal/modules/esm/loader:[2m765:52[22m[39m
+[90m [2mÔØ»[22m #resolve node:internal/modules/esm/loader:[2m701:17[22m[39m
+[90m [2mÔØ»[22m ModuleLoader.getOrCreateModuleJob node:internal/modules/esm/loader:[2m621:35[22m[39m
+[90m [2mÔØ»[22m onImport.tracePromise.__proto__ node:internal/modules/esm/loader:[2m650:32[22m[39m
+
+[31m[2mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[22m[39m
+[31m[1mSerialized Error:[22m[39m [90m{ code: 'ERR_MODULE_NOT_FOUND' }[39m
+[31mÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[39m
+
+
+[2m Test Files [22m [2mno tests[22m
+[2m      Tests [22m [2mno tests[22m
+[2m     Errors [22m [1m[31m1 error[39m[22m
+[2m   Start at [22m 04:41:21
+[2m   Duration [22m 766ms[2m (transform 0ms, setup 0ms, import 0ms, tests 0ms, environment 0ms)[22m
+
