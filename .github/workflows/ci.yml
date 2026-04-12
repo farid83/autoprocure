@@ -1,92 +1,52 @@
-name: CI — Symfony + React
+# --- Nom du workflow (visible dans l'interface Github Actions)
+name: CI — AutoProcure
 
+# --- Evenements qui déclenchent ce workflow
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop]           # Déclenche chaque push sur ces branches
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop]           # Déclenche chaque pull request vers ces branches
 
-jobs:
-
-  # ============================================
-  # JOB 1 : Backend Symfony + PostgreSQL
-  # ============================================
-  backend:
-    name: Backend (Symfony)
-    runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: symfony
-          POSTGRES_PASSWORD: symfony
-          POSTGRES_DB: symfony_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+jobs: 
+  ci:                     # Nom interne du job (arbitraires)
+    runs-on: ubuntu-latest # Machine virtuelle Github (Ubuntu 24.04)
 
     steps:
-      - uses: actions/checkout@v3
+      # ETAPE 1 : Récupérer le code source
+      - name: Checkout du code
+        uses: actions/checkout@v4
+        # Action officielle Github qui con votre dépôt sur le runner
 
-      - name: Setup PHP 8.2
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, xml, ctype, iconv, pdo, pdo_pgsql, intl
-          coverage: none
-
-      - name: Install dependencies
-        working-directory: backend
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Create .env.local
-        working-directory: backend
-        run: |
-          echo "APP_ENV=test" >> .env.local
-          echo "DATABASE_URL=postgresql://symfony:symfony@127.0.0.1:5432/symfony_test?serverVersion=15&charset=utf8" >> .env.local
-
-      - name: Run database migrations
-        working-directory: backend
-        run: php bin/console doctrine:migrations:migrate --no-interaction
-
-      - name: Check Symfony config
-        working-directory: backend
-        run: php bin/console about
-
-      - name: Run tests
-        working-directory: backend
-        run: php bin/phpunit || echo "No tests yet"
-
-  # ============================================
-  # JOB 2 : Frontend React
-  # ============================================
-  frontend:
-    name: Frontend (React)
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v3
+      # ETAPE 2 : Installer Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dir: frontend
+          cache: 'npm'      # Cache npm pour acélérer les runs suivants
+          cache-dependency-path: 'frontend/package-lock.json'
 
-      - name: Install dependencies
+      # ETAPE 3 : Installer les dépendances Javascript  
+      - name: Installation dépendances frontend
+        run: npm ci         # 'ci'= install propre depuis package-lock.json
         working-directory: frontend
-        run: npm ci
 
-      - name: Build
-        working-directory: frontend
+      # ETAPE 4 : Vérifier compilation React
+      - name: Build React
         run: npm run build
-
-      - name: Run tests
         working-directory: frontend
-        run: npm test -- --watchAll=false || echo "No tests yet"
+
+      # ETAPE 5 : Vérifier la qualité du code
+      - name: Lint ESLint
+        run: npm run lint
+        working-directory: frontend 
+        # Si une règle ESLint est violée, le pipeline s'arrête ici en rouge
+
+      # ETAPE 6 : Exécuter les tests Vitest
+      - name: Tests unitaires
+        run: npm run test -- --reporter=verbose
+        working-directory: frontend
+
+        # '--watchAll=false' : pas de mode interactif (nécessaire en CI)
+        # '--ci': le test échoue si un snapshot est obsolète
+        # 'npm test' : lance les tests définis dans package.json
