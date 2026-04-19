@@ -56,6 +56,23 @@ jobs:
     name: backend-tests
     runs-on: ubuntu-latest # Machine virtuelle Github (Ubuntu 24.04)
 
+    # --- Conteneur de service PostgreSQL pour les tests
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: inventory_api_db_test
+          POSTGRES_USER: anjtech
+          POSTGRES_PASSWORD: pass_test
+        ports:
+          - 5432:5432
+        # Vérification que PostgreSQL est prêt avant de continuer
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       # ETAPE 1 : Récupérer le code source
       - name: Checkout du code
@@ -66,31 +83,31 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
-          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql
           coverage: none
-          # On installe les extensions nécessaires pour Symfony et SQLite
+          # On installe pdo_pgsql pour le support PostgreSQL
 
       # ETAPE 3 : Installer les dépendances PHP (Composer)
       - name: Installation dépendances backend
         run: composer install --no-progress --no-suggest --prefer-dist
         working-directory: backend
 
-      # ETAPE 4 : Préparer la base de données de test (SQLite)
+      # ETAPE 4 : Préparer la base de données de test (PostgreSQL)
       - name: Create Database and Schema
         run: |
-          mkdir -p var
+          php bin/console doctrine:database:create --if-not-exists --env=test
           php bin/console doctrine:schema:create --env=test
           php bin/console doctrine:fixtures:load --no-interaction --env=test
         working-directory: backend
         env:
-          DATABASE_URL: sqlite:///%kernel.project_dir%/var/data.db
-          # On utilise SQLite pour la rapidité en CI
+          DATABASE_URL: pgsql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
+          # On remplace SQLite par une vraie base Postgres en CI
 
       # ETAPE 5 : Exécuter les tests PHPUnit
       - name: Exécuter les tests backend
         run: vendor/bin/phpunit
         working-directory: backend
         env:
-          DATABASE_URL: sqlite:///%kernel.project_dir%/var/data.db
+          DATABASE_URL: pgsql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
           KERNEL_CLASS: App\Kernel
-          # Lancement de la suite de tests PHPUnit
+          # Lancement de la suite de tests avec l'environnement PostgreSQL
