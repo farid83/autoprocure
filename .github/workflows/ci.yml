@@ -9,7 +9,8 @@ on:
     branches: [main, develop]           # Déclenche chaque pull request vers ces branches
 
 jobs: 
-  ci:                     # Nom interne du job (arbitraires)
+  ci:
+    name: ci (frontend)
     runs-on: ubuntu-latest # Machine virtuelle Github (Ubuntu 24.04)
 
     steps:
@@ -43,10 +44,53 @@ jobs:
         # Si une règle ESLint est violée, le pipeline s'arrête ici en rouge
 
       # ETAPE 6 : Exécuter les tests Vitest
-      - name: Tests unitaires
+      - name: Tests unitaires frontend
         run: npm run test -- --reporter=verbose
         working-directory: frontend
 
         # '--watchAll=false' : pas de mode interactif (nécessaire en CI)
         # '--ci': le test échoue si un snapshot est obsolète
         # 'npm test' : lance les tests définis dans package.json
+
+  backend-tests:
+    name: backend-tests
+    runs-on: ubuntu-latest # Machine virtuelle Github (Ubuntu 24.04)
+
+    steps:
+      # ETAPE 1 : Récupérer le code source
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      # ETAPE 2 : Installer PHP
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite
+          coverage: none
+          # On installe les extensions nécessaires pour Symfony et SQLite
+
+      # ETAPE 3 : Installer les dépendances PHP (Composer)
+      - name: Installation dépendances backend
+        run: composer install --no-progress --no-suggest --prefer-dist
+        working-directory: backend
+
+      # ETAPE 4 : Préparer la base de données de test (SQLite)
+      - name: Create Database and Schema
+        run: |
+          mkdir -p var
+          php bin/console doctrine:schema:create --env=test
+          php bin/console doctrine:fixtures:load --no-interaction --env=test
+        working-directory: backend
+        env:
+          DATABASE_URL: sqlite:///%kernel.project_dir%/var/data.db
+          # On utilise SQLite pour la rapidité en CI
+
+      # ETAPE 5 : Exécuter les tests PHPUnit
+      - name: Exécuter les tests backend
+        run: vendor/bin/phpunit
+        working-directory: backend
+        env:
+          DATABASE_URL: sqlite:///%kernel.project_dir%/var/data.db
+          KERNEL_CLASS: App\Kernel
+          # Lancement de la suite de tests PHPUnit
