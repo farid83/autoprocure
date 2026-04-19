@@ -100,7 +100,7 @@ jobs:
           php bin/console doctrine:fixtures:load --no-interaction --env=test
         working-directory: backend
         env:
-          DATABASE_URL: pgsql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
+          DATABASE_URL: postgresql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
           # On remplace SQLite par une vraie base Postgres en CI
 
       # ETAPE 5 : Exécuter les tests PHPUnit
@@ -108,6 +108,6 @@ jobs:
         run: vendor/bin/phpunit
         working-directory: backend
         env:
-          DATABASE_URL: pgsql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
+          DATABASE_URL: postgresql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
           KERNEL_CLASS: App\Kernel
           # Lancement de la suite de tests avec l'environnement PostgreSQL
