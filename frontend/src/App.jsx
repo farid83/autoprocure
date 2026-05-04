@@ -1,12 +1,16 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Register from './pages/Register';
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
+import DemandeModal from "./components/DemandeModal";
+
 
 function App() {
+  const navigate = useNavigate();
+
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -25,6 +29,15 @@ function App() {
         <Route path="/requests" element={<div className="p-6">Page Demandes (En cours)</div>} />
         <Route path="/validations" element={<div className="p-6">Page Validations (En cours)</div>} />
         <Route path="/users" element={<div className="p-6">Page Utilisateurs (En cours)</div>} />
+        <Route 
+          path="/requests/new" 
+          element={
+            <DemandeModal 
+              open={true} 
+              onClose={() => navigate('/dashboard')} 
+            />
+          } 
+        />
       </Route>
 
       <Route path="*" element={
@@ -39,4 +52,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;
