@@ -1,7 +1,7 @@
-name: CD - Inventory 
+name: CD — AutoProcure 
 on: 
   workflow_run: 
-    workflows: ["CI-Inventory"] 
+    workflows: ["CI — AutoProcure"] 
     types: [completed] 
     branches: [main] 
 permissions: 
