@@ -1,4 +1,3 @@
-# .github/workflows/cd.yml 
 name: CD - Inventory 
 on: 
   workflow_run: 
@@ -9,8 +8,7 @@ permissions:
   contents: read 
   packages: write 
 jobs: 
-  # 
-─── Job 1 : construire et publier les images ────────────── 
+  # ─── Job 1 : construire et publier les images ────────────── 
   build-and-push: 
     runs-on: ubuntu-latest 
     if: ${{ github.event.workflow_run.conclusion == 'success' }} 
