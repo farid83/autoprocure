@@ -1,0 +1,30 @@
+# docker-compose.prod.yml - sur le VPS, pas en dev 
+services: 
+  frontend: 
+    image: ghcr.io/farid83/auto-procure-frontend:latest 
+    ports: ["80:80"] 
+    restart: unless-stopped 
+  backend: 
+    image: ghcr.io/farid83/auto-procure-backend:latest 
+    ports: ["8000:9000"] 
+    environment: 
+      DATABASE_URL: ${DATABASE_URL} 
+      APP_ENV: prod 
+    depends_on: 
+      db: 
+        condition: service_healthy 
+    restart: unless-stopped 
+  db: 
+    image: postgres:16 
+    environment: 
+      POSTGRES_DB: inventory_api_db 
+      POSTGRES_USER: anjtech 
+      POSTGRES_PASSWORD: ${DB_PASSWORD} 
+    volumes: 
+      - db-data:/var/lib/postgresql/data 
+    healthcheck: 
+      test: ["CMD-SHELL", "pg_isready -U anjtech -d inventory_api_db"] 
+      timeout: 10s 
+      retries: 5 
+    restart: unless-stopped 
+volumes:
