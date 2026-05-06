@@ -1,28 +1,92 @@
-name: CD — AutoProcure 
-on: 
-  workflow_run: 
-    workflows: ["CI — AutoProcure"] 
-    types: [completed] 
-    branches: [main] 
-permissions: 
-  contents: read 
-  packages: write 
-jobs: 
-  # ─── Job 1 : construire et publier les images ────────────── 
-  build-and-push: 
-    runs-on: ubuntu-latest 
-    if: ${{ github.event.workflow_run.conclusion == 'success' }} 
-    steps: 
-      - uses: actions/checkout@v4 
-      - name: Login GHCR 
-        uses: docker/login-action@v3 
-        with: 
-          registry: ghcr.io 
-          username: ${{ github.actor }} 
-          password: ${{ secrets.GITHUB_TOKEN }} 
-      - name: Préparer les tags 
-        id: meta 
-        run: | 
-          REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]') 
-          echo "repo=$REPO" >> $GITHUB_OUTPUT 
+name: CD — AutoProcure
+
+on:
+  workflow_run:
+    workflows: ["CI — AutoProcure"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  # ─── Job 1 : construire et publier les images ────────────────
+  build-and-push:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Préparer les tags
+        id: meta
+        run: |
+          REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          echo "repo=$REPO" >> $GITHUB_OUTPUT
           echo "sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Build & push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend        
+          push: true
+          tags: |
+            ghcr.io/${{ steps.meta.outputs.repo }}-frontend:latest
+            ghcr.io/${{ steps.meta.outputs.repo }}-frontend:${{ steps.meta.outputs.sha }}
+
+      - name: Build & push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend         
+          push: true
+          tags: |
+            ghcr.io/${{ steps.meta.outputs.repo }}-backend:latest
+            ghcr.io/${{ steps.meta.outputs.repo }}-backend:${{ steps.meta.outputs.sha }}
+
+  # ─── Job 2 : déployer sur le VPS ─────────────────────────────
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copier docker-compose.prod.yml sur le VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "docker-compose.prod.yml"
+          target: "/opt/autoprocure/"
+
+      - name: Déployer via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /opt/autoprocure
+
+            # Écrire le .env depuis les secrets GitHub
+            cat > .env << 'EOF'
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DATABASE_URL=postgresql://anjtech:${{ secrets.DB_PASSWORD }}@db:5432/inventory_api_db
+            EOF
+
+            # Login GHCR depuis le VPS pour puller les images privées
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # Mettre à jour et démarrer
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d
+
+            # Vérification
+            docker compose -f docker-compose.prod.yml ps
