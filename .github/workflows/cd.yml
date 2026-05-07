@@ -64,7 +64,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "docker-compose.prod.yml"
-          target: "/opt/autoprocure/"
+          target: "/home/deploy/autoprocure/"
 
       - name: Déployer via SSH
         uses: appleboy/ssh-action@v1
@@ -73,7 +73,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /opt/autoprocure
+            cd /home/deploy/autoprocure
 
             # Écrire le .env depuis les secrets GitHub
             cat > .env << 'EOF'
