@@ -14,6 +14,9 @@ jobs:
   # ─── Job 1 : construire et publier les images ────────────────
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v4
