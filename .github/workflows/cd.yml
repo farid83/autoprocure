@@ -35,10 +35,10 @@ jobs:
       - name: Build & push frontend
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend        
+          context: ./frontend
           push: true
           build-args: |
-            VITE_API_URL=${{ secrets.API_URL }}
+            VITE_API_URL=http://${{ secrets.SERVER_HOST }}:8000/api
           tags: |
             ghcr.io/${{ steps.meta.outputs.repo }}-frontend:latest
             ghcr.io/${{ steps.meta.outputs.repo }}-frontend:${{ steps.meta.outputs.sha }}
@@ -78,19 +78,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/deploy/autoprocure
-
-            # Écrire le .env depuis les secrets GitHub
-            cat > .env << 'EOF'
-            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            DATABASE_URL=postgresql://anjtech:${{ secrets.DB_PASSWORD }}@db:5432/inventory_api_db
-            EOF
-
-            # Login GHCR depuis le VPS pour puller les images privées
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-            # Mettre à jour et démarrer
             docker compose -f docker-compose.prod.yml pull
-            docker compose -f docker-compose.prod.yml up -d
-
-            # Vérification
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
             docker compose -f docker-compose.prod.yml ps
