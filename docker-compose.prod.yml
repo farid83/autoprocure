@@ -1,11 +1,11 @@
 # docker-compose.prod.yml - sur le VPS, pas en dev 
 services: 
   frontend: 
-    image: ghcr.io/farid83/auto-procure-frontend:latest 
+    image: ghcr.io/farid83/autoprocure-frontend:latest 
     ports: ["80:80"] 
     restart: unless-stopped 
   backend: 
-    image: ghcr.io/farid83/auto-procure-backend:latest 
+    image: ghcr.io/farid83/autoprocure-backend:latest 
     ports: ["8000:9000"] 
     environment: 
       DATABASE_URL: ${DATABASE_URL} 
