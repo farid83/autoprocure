@@ -14,7 +14,12 @@ import { Trash2, Plus, AlertCircle, Loader2, PackageCheck, Check } from 'lucide-
 import api from '../services/api';
 
 const emptyItem = () => ({
-  id: crypto.randomUUID(),
+  id: crypto.randomUUID
+    ? crypto.randomUUID()
+    : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      }),
   materielId: null,
   materielNom: '',
   search: '',
