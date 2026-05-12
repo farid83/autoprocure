@@ -19,6 +19,9 @@ RUN npm ci
 COPY .  .
 # ↑ Maintenant on copie tout le reste du code source 
 
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+# ↑ 
 RUN npm run build 
 # ↑ Compile l'application React en fichiers HTML/CSS/JS statiques dans /app/dist
 
