@@ -14,7 +14,7 @@ import Dashboard from "../pages/Dashboard";
  * 3. Intercepteurs : On peut attacher le token à *toutes* les requêtes automatiquement.
  */
 
-const API_URL = "http://localhost:8000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
 
 // Création d'une instance Axios avec une configuration par défaut
 const api = axios.create({
