@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import api from '../services/api';
+import api, { getMateriels, getCategories } from '../services/api';
 
 /**
  * Hook pour récupérer les statistiques du tableau de bord.
@@ -14,5 +14,26 @@ export const useDashboardStats = () => {
         },
         // Rafraîchir les données toutes les 5 minutes
         staleTime: 5 * 60 * 1000,
+    });
+};
+/**
+ * Hook pour récupérer la liste des matériels.
+ */
+export const useMateriels = () => {
+    return useQuery({
+        queryKey: ['materiels'],
+        queryFn: getMateriels,
+        staleTime: 2 * 60 * 1000, // 2 minutes
+    });
+};
+
+/**
+ * Hook pour récupérer la liste des catégories.
+ */
+export const useCategories = () => {
+    return useQuery({
+        queryKey: ['categories'],
+        queryFn: getCategories,
+        staleTime: 10 * 60 * 1000, // 10 minutes
     });
 };
