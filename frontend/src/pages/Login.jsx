@@ -106,7 +106,7 @@ const Login = () => {
                             {(localError || authError) && (
                                 <Alert className="border-red-200 bg-red-50 dark:bg-red-950">
                                     <AlertDescription className="text-red-800 dark:text-red-200">
-                                        {localError || authError}
+                                        {(localError || authError) instanceof Error ? (localError || authError).message : typeof (localError || authError) === 'object' ? JSON.stringify(localError || authError) : String(localError || authError)}
                                     </AlertDescription>
                                 </Alert>
                             )}
