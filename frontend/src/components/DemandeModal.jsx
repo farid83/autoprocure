@@ -57,7 +57,7 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [item.search, item.showSuggestions]);
+  }, [item.search, item.showSuggestions, item.materielNom, item.suggestions.length, onUpdate]);
 
   const handleSearchChange = (e) => {
     onUpdate({
@@ -139,7 +139,9 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
               >
                 <div>
                   <p className="text-sm font-semibold text-foreground">{sug.nom}</p>
-                  <p className="text-xs text-muted-foreground">{sug.categorie}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {typeof sug.categorie === 'object' ? sug.categorie?.nom : sug.categorie}
+                  </p>
                 </div>
                 <span className="text-xs text-muted-foreground shrink-0 ml-3">
                   {sug.quantiteDisponible} dispo.
@@ -167,7 +169,10 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
           type="number"
           min="1"
           value={item.quantite}
-          onChange={(e) => onUpdate({ quantite: Math.max(1, parseInt(e.target.value) || 1) })}
+          onChange={(e) => {
+            const val = e.target.value;
+            onUpdate({ quantite: val === '' ? '' : Math.max(1, parseInt(val) || 1) });
+          }}
           className={`h-10 ${qtyError ? 'border-destructive' : ''}`}
         />
         {qtyError && (

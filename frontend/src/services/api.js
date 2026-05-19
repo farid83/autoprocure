@@ -87,43 +87,28 @@ export async function dashboard() {
     return api.get("/dashboard");
 }
 
-// --- Endpoints Articles ---
+// --- Endpoints Materiels ---
 
-// export async function getArticles() {
-//     return api.get("/articles");
-// }
+export async function getMateriels() {
+    return api.get("/materiels");
+}
 
-// export async function getArticle(id) {
-//     return api.get(`/articles/${id}`);
-// }
+export async function createMateriel(materielData) {
+    return api.post("/materiels", materielData);
+}
 
-// export async function createArticle(articleData) {
-//     // articleData doit contenir { titre, content, categorieId }
-//     return api.post("/articles", articleData);
-// }
+export async function updateMateriel(id, materielData) {
+    return api.put(`/materiels/${id}`, materielData);
+}
 
-// export async function updateArticle(id, articleData) {
-//     return api.put(`/articles/${id}`, articleData);
-// }
+export async function deleteMateriel(id) {
+    return api.delete(`/materiels/${id}`);
+}
 
-// export async function deleteArticle(id) {
-//     return api.delete(`/articles/${id}`);
-// }
+// --- Endpoints Categories ---
 
-// // --- Endpoints Commentaires ---
-
-// export async function getComments(articleId) {
-//     return api.get(`/articles/${articleId}/comments`);
-// }
-
-// export async function createComment(articleId, content) {
-//     return api.post(`/articles/${articleId}/comments`, { content });
-// }
-
-// // --- Endpoints Categories ---
-
-// export async function getCategories() {
-//     return api.get("/categories");
-// }
+export async function getCategories() {
+    return api.get("/categories");
+}
 
 export default api;

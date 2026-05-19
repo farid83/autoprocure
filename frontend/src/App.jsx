@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import DemandeModal from "./components/DemandeModal";
+import Materiels from "./pages/Materiels";
 
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
       }>
         <Route path="/dashboard" element={<Dashboard />} />
         {/* Futurs routes protégées ici */}
-        <Route path="/materials" element={<div className="p-6">Page Matériels (En cours)</div>} />
+        <Route path="/materials" element={<Materiels />} />
         <Route path="/categories" element={<div className="p-6">Page Catégories (En cours)</div>} />
         <Route path="/requests" element={<div className="p-6">Page Demandes (En cours)</div>} />
         <Route path="/validations" element={<div className="p-6">Page Validations (En cours)</div>} />

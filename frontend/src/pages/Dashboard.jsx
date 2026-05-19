@@ -91,7 +91,7 @@ const Dashboard = () => {
                         <div className="flex items-center space-x-2">
                             <AlertTriangle className="w-5 h-5 text-red-500" />
                             <p className="text-sm text-red-700">
-                                Impossible de charger les statistiques : {statsError}
+                                Impossible de charger les statistiques : {statsError instanceof Error ? statsError.message : typeof statsError === 'object' ? JSON.stringify(statsError) : String(statsError)}
                             </p>
                         </div>
                     </CardContent>
