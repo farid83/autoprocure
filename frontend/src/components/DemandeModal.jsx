@@ -57,7 +57,7 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [item.search, item.showSuggestions]);
+  }, [item.search, item.showSuggestions, item.materielNom, item.suggestions.length, onUpdate]);
 
   const handleSearchChange = (e) => {
     onUpdate({
