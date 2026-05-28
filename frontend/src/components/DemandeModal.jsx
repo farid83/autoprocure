@@ -52,12 +52,13 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
           isSearching: false,
         });
       } catch {
-        onUpdate({ isSearching: false });
+        onUpdate({ isSearching: false });teams
       }
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [item.search, item.showSuggestions, item.materielNom, item.suggestions.length, onUpdate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.search, item.showSuggestions, item.materielNom]);
 
   const handleSearchChange = (e) => {
     onUpdate({
