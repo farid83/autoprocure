@@ -57,7 +57,8 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [item.search, item.showSuggestions, item.materielNom, item.suggestions.length, onUpdate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.search, item.showSuggestions, item.materielNom]);
 
   const handleSearchChange = (e) => {
     onUpdate({
@@ -163,7 +164,7 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
       <div className="space-y-1.5 w-full sm:w-24 shrink-0">
         <Label htmlFor={`quantite-${item.id}`} className="text-sm font-medium">
           Quantité
-        </Label>
+        </Label> 
         <Input
           id={`quantite-${item.id}`}
           type="number"
