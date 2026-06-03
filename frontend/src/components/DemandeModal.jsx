@@ -52,7 +52,7 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
           isSearching: false,
         });
       } catch {
-        onUpdate({ isSearching: false });teams
+        onUpdate({ isSearching: false });
       }
     }, 300);
 
@@ -164,7 +164,7 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
       <div className="space-y-1.5 w-full sm:w-24 shrink-0">
         <Label htmlFor={`quantite-${item.id}`} className="text-sm font-medium">
           Quantité
-        </Label>
+        </Label> 
         <Input
           id={`quantite-${item.id}`}
           type="number"
