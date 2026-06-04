@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import api, { getMateriels, getCategories } from '../services/api';
+import api, { getMateriels, getCategories, getDemandes } from '../services/api';
 
 /**
  * Hook pour récupérer les statistiques du tableau de bord.
@@ -35,5 +35,16 @@ export const useCategories = () => {
         queryKey: ['categories'],
         queryFn: getCategories,
         staleTime: 10 * 60 * 1000, // 10 minutes
+    });
+};
+
+/**
+ * Hook pour récupérer la liste des demandes.
+ */
+export const useDemandes = () => {
+    return useQuery({
+        queryKey: ['demandes'],
+        queryFn: getDemandes,
+        staleTime: 2 * 60 * 1000, // 2 minutes
     });
 };
