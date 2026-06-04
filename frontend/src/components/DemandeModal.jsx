@@ -37,28 +37,32 @@ const ItemRow = ({ item, index, total, onUpdate, onRemove, errors }) => {
   const dropdownRef = useRef(null);
 
   // Debounce recherche
-  useEffect(() => {
-    if (!item.showSuggestions || item.search.length < 2 || item.search === item.materielNom) {
-      if (item.suggestions.length > 0) onUpdate({ suggestions: [] });
-      return;
+useEffect(() => {
+  // Ne pas rechercher si : pas de focus, champ vide, ou matériel déjà sélectionné
+  if (!item.showSuggestions || item.search.trim().length === 0) {
+    if (item.suggestions.length > 0) onUpdate({ suggestions: [] });
+    return;
+  }
+
+  // Si le texte correspond encore exactement au matériel sélectionné, pas besoin de re-chercher
+  if (item.materielId && item.search === item.materielNom) return;
+
+  onUpdate({ isSearching: true });
+  const timer = setTimeout(async () => {
+    try {
+      const response = await api.get(`/materiels?search=${encodeURIComponent(item.search)}`);
+      onUpdate({
+        suggestions: Array.isArray(response) ? response : [],
+        isSearching: false,
+      });
+    } catch {
+      onUpdate({ isSearching: false });
     }
+  }, 300);
 
-    onUpdate({ isSearching: true });
-    const timer = setTimeout(async () => {
-      try {
-        const response = await api.get(`/materiels?search=${encodeURIComponent(item.search)}`);
-        onUpdate({
-          suggestions: Array.isArray(response) ? response : [],
-          isSearching: false,
-        });
-      } catch {
-        onUpdate({ isSearching: false });
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.search, item.showSuggestions, item.materielNom]);
+  return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [item.search, item.showSuggestions]);
 
   const handleSearchChange = (e) => {
     onUpdate({

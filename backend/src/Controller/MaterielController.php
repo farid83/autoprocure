@@ -18,15 +18,21 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\ExpressionLanguage\Expression;
-
+use Symfony\Component\HttpFoundation\Request;
 
 #[Route('/api/materiels', name: 'api_materiels_')]
 class MaterielController extends AbstractController
 {
     #[Route('', name: 'index', methods: ['GET'])]
-    public function index(MaterielRepository $repo): JsonResponse
+    public function index(Request $request, MaterielRepository $repo): JsonResponse
     {
-        return $this->json($repo->findAll(), 200, [], ['groups' => 'materiel:read']);
+        $search = $request->query->get('search', '');
+
+        $materiels = $search
+            ? $repo->findBySearch($search)
+            : $repo->findAll();
+
+        return $this->json($materiels, 200, [], ['groups' => 'materiel:read']);
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
@@ -36,7 +42,7 @@ class MaterielController extends AbstractController
         CategorieRepository $catRepo,
         EntityManagerInterface $em
     ): JsonResponse {
-        
+
         $categorie = $catRepo->find($dto->categorieId);
         if (!$categorie) {
             return $this->json(['error' => 'Categorie not found'], 404);
@@ -53,7 +59,7 @@ class MaterielController extends AbstractController
         $materiel->setCreatedBy($this->getUser());
 
         $em->persist($materiel);
-        
+
         // Log to Historique
         $hist = new Historique();
         $hist->setAction('Création');
@@ -65,7 +71,7 @@ class MaterielController extends AbstractController
 
         // Update targetId after flush? No, need ID.
         $hist->setTargetId($materiel->getId());
-        $em->flush(); 
+        $em->flush();
 
         return $this->json($materiel, 201, [], ['groups' => 'materiel:read']);
     }
@@ -79,12 +85,12 @@ class MaterielController extends AbstractController
         EntityManagerInterface $em,
         NotificationService $notificationService
     ): JsonResponse {
-        
+
         $categorie = $catRepo->find($dto->categorieId);
         if ($categorie) {
-             $materiel->setCategorie($categorie);
+            $materiel->setCategorie($categorie);
         }
-        
+
         $materiel->setNom($dto->nom);
         $materiel->setDescription($dto->description);
         $materiel->setEtat($dto->etat);
@@ -96,11 +102,11 @@ class MaterielController extends AbstractController
         $materiel->setQuantiteTotale($dto->quantiteTotale);
         // Ensure available <= total
         if ($materiel->getQuantiteDisponible() > $dto->quantiteTotale) {
-             $materiel->setQuantiteDisponible($dto->quantiteTotale);
+            $materiel->setQuantiteDisponible($dto->quantiteTotale);
         }
 
         $em->flush();
-        
+
         $hist = new Historique();
         $hist->setAction('Modification');
         $hist->setTargetEntity('Materiel');
@@ -135,13 +141,13 @@ class MaterielController extends AbstractController
         }
 
         $em->remove($materiel);
-        
+
         $hist = new Historique();
         $hist->setAction('Suppression');
         $hist->setTargetEntity('Materiel');
         $hist->setDetails("Suppression du matériel {$materiel->getNom()}");
         $em->persist($hist);
-        
+
         $em->flush();
 
         return $this->json(null, 204);

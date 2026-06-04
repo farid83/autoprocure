@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { 
-    Package, 
-    Plus, 
-    Pencil, 
-    Trash2, 
-    Search, 
-    AlertCircle, 
+import {
+    Package,
+    Plus,
+    Pencil,
+    Trash2,
+    Search,
+    AlertCircle,
     MoreVertical,
     CheckCircle2,
     XCircle,
@@ -24,13 +24,13 @@ import { Alert, AlertDescription } from '../components/ui/alert';
 const Materiels = () => {
     const { hasAnyRole } = useAuth();
     const { data: materiels, isLoading, error, refetch } = useMateriels();
-    
+
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingMateriel, setEditingMateriel] = useState(null);
     const [feedback, setFeedback] = useState(null);
 
-    const filteredMateriels = materiels?.filter(m => 
+    const filteredMateriels = materiels?.filter(m =>
         m.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
         m.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         m.categorie?.nom.toLowerCase().includes(searchTerm.toLowerCase())
@@ -103,8 +103,8 @@ const Materiels = () => {
             {/* Search and Filters */}
             <div className="relative max-w-md">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input 
-                    placeholder="Rechercher un matériel, une catégorie..." 
+                <Input
+                    placeholder="Rechercher un matériel, une catégorie..."
                     className="pl-10 h-11 shadow-sm"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -152,18 +152,18 @@ const Materiels = () => {
                                     <div className="flex gap-1">
                                         {hasAnyRole(['ROLE_ADMIN', 'ROLE_COMPTABLE_MATIERE']) && (
                                             <>
-                                                <Button 
-                                                    variant="ghost" 
-                                                    size="icon" 
+                                                <Button          
+                                                    variant="ghost"   
+                                                    size="icon"
                                                     className="h-8 w-8 rounded-full hover:bg-primary/10 hover:text-primary transition-colors shadow-sm bg-white border border-border"
                                                     onClick={() => handleEdit(materiel)}
                                                 >
                                                     <Pencil className="w-3.5 h-3.5" />
-                                                </Button>
+                                                </Button> 
                                                 {hasAnyRole(['ROLE_ADMIN']) && (
-                                                    <Button 
-                                                        variant="ghost" 
-                                                        size="icon" 
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
                                                         className="h-8 w-8 rounded-full hover:bg-red-50 hover:text-red-600 transition-colors shadow-sm bg-white border border-border"
                                                         onClick={() => handleDelete(materiel.id)}
                                                     >
@@ -179,7 +179,7 @@ const Materiels = () => {
                                 <p className="text-sm text-muted-foreground line-clamp-2 mb-4 h-10">
                                     {materiel.description || "Aucune description fournie."}
                                 </p>
-                                
+
                                 <div className="grid grid-cols-2 gap-2 pt-4 border-t border-border/50">
                                     <div className="space-y-0.5">
                                         <p className="text-[10px] text-muted-foreground uppercase font-bold tracking-tight">En Stock</p>
@@ -194,7 +194,7 @@ const Materiels = () => {
                                         </p>
                                     </div>
                                 </div>
-                                
+
                                 {materiel.quantiteDisponible <= materiel.seuilAlerte && (
                                     <div className="mt-3 flex items-center gap-1.5 text-red-600 bg-red-50 p-2 rounded-md border border-red-100">
                                         <AlertCircle className="w-3.5 h-3.5" />
@@ -209,7 +209,7 @@ const Materiels = () => {
 
             {/* Floating Action Button */}
             {hasAnyRole(['ROLE_ADMIN', 'ROLE_COMPTABLE_MATIERE']) && (
-                <Button 
+                <Button
                     className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-2xl shadow-primary/40 hover:scale-110 transition-transform duration-200 z-50 p-0"
                     onClick={handleAdd}
                 >
@@ -218,9 +218,9 @@ const Materiels = () => {
             )}
 
             {/* Modals */}
-            <MaterielModal 
-                open={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+            <MaterielModal
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
                 materiel={editingMateriel}
                 onSuccess={handleModalSuccess}
             />
