@@ -208,7 +208,7 @@ useEffect(() => {
 /* ─────────────────────────────────────────────
    Modal principal
 ───────────────────────────────────────────── */
-const DemandeModal = ({ open, onClose }) => {
+const DemandeModal = ({ open, onClose, onSuccess }) => {
   const [items, setItems] = useState([emptyItem()]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
@@ -270,6 +270,7 @@ const DemandeModal = ({ open, onClose }) => {
     try {
       await api.post('/demandes', payload);
       setSuccess('Demande envoyée avec succès !');
+      if (onSuccess) onSuccess();
       setTimeout(() => { onClose(); }, 2000);
     } catch (error) {
       if (error.errors) {

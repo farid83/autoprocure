@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import DemandeModal from "./components/DemandeModal";
 import Materiels from "./pages/Materiels";
+import Demandes from "./pages/Demandes";
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
         {/* Futurs routes protégées ici */}
         <Route path="/materials" element={<Materiels />} />
         <Route path="/categories" element={<div className="p-6">Page Catégories (En cours)</div>} />
-        <Route path="/requests" element={<div className="p-6">Page Demandes (En cours)</div>} />
+        <Route path="/requests" element={<Demandes />} />
         <Route path="/validations" element={<div className="p-6">Page Validations (En cours)</div>} />
         <Route path="/users" element={<div className="p-6">Page Utilisateurs (En cours)</div>} />
         <Route 

@@ -111,4 +111,8 @@ export async function getCategories() {
     return api.get("/categories");
 }
 
+export async function getDemandes() {
+    return api.get("/demandes");
+}
+
 export default api;
