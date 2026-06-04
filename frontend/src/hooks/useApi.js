@@ -25,7 +25,7 @@ export const useMateriels = () => {
         queryFn: getMateriels,
         staleTime: 2 * 60 * 1000, // 2 minutes
     });
-};
+}; 
 
 /**
  * Hook pour récupérer la liste des catégories.
