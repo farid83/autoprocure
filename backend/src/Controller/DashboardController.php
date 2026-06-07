@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/api/dashboard', name: 'api_dashboard_')]
-class DashboardController extends AbstractController
+class DashboardController extends BaseController
 {
     #[Route('', name: 'index', methods: ['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -23,7 +23,7 @@ class DashboardController extends AbstractController
         UtilisateurRepository $userRepo
     ): JsonResponse {
         /** @var \App\Entity\Utilisateur $user */
-        $user = $this->getUser();
+        $user = $this->getCurrentUser();
         $stats = [];
 
         if ($this->isGranted('ROLE_ADMIN')) {

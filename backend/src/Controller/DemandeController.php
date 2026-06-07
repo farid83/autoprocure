@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/api/demandes', name: 'api_demandes_')]
-class DemandeController extends AbstractController
+class DemandeController extends BaseController
 {
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(DemandeRepository $repo): JsonResponse
@@ -29,7 +29,7 @@ class DemandeController extends AbstractController
             return $this->json($repo->findAll(), 200, [], ['groups' => 'demande:read']);
         }
 
-        return $this->json($repo->findBy(['utilisateur' => $this->getUser()]), 200, [], ['groups' => 'demande:read']);
+        return $this->json($repo->findBy(['utilisateur' => $this->getCurrentUser()]), 200, [], ['groups' => 'demande:read']);
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
@@ -41,7 +41,7 @@ class DemandeController extends AbstractController
         NotificationService $notificationService
     ): JsonResponse {
         $demande = new Demande();
-        $demande->setUtilisateur($this->getUser());
+        $demande->setUtilisateur($this->getCurrentUser());
 
         // Initial check for stock availability
         $insufficientStock = false;
@@ -74,7 +74,7 @@ class DemandeController extends AbstractController
         } else {
             $demande->setStatut('en attente');
             $statusLabel = "Création";
-            $details = "Nouvelle demande par " . $this->getUser()->getUserIdentifier();
+            $details = "Nouvelle demande par " . $this->getCurrentUser()->getUserIdentifier();
         }
 
         foreach ($itemsToPersist as $dm) {
@@ -110,7 +110,7 @@ class DemandeController extends AbstractController
             return $this->json(['error' => 'Demande not in waiting state'], 400);
         }
 
-        $demande->setComptableMatiere($this->getUser());
+        $demande->setComptableMatiere($this->getCurrentUser());
         $demande->setCommentaireValidation($dto->commentaire);
         $demande->setDateValidation(new \DateTime());
         $demande->setStatut('validée'); // Assuming full validation if success
@@ -156,7 +156,7 @@ class DemandeController extends AbstractController
             return $this->json(['error' => 'Demande needs to be validated first'], 400);
         }
 
-        $demande->setAdministrateur($this->getUser());
+        $demande->setAdministrateur($this->getCurrentUser());
         $demande->setCommentaireApprobation($dto->commentaire);
         $demande->setDateApprobation(new \DateTime());
         $demande->setStatut($dto->decision); // approuvée / rejetée

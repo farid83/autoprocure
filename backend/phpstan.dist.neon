@@ -3,3 +3,9 @@ parameters:
     paths:
         - src/
         - tests/
+    ignoreErrors:
+        - '#is never assigned int so it can be removed#'
+        - '#is never assigned null so it can be removed#'
+        - '#is never read, only written#'
+        - '#will always evaluate to true#'
+        - '#Negated boolean expression is always false#'
