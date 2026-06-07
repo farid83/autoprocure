@@ -9,3 +9,4 @@ parameters:
         - '#is never read, only written#'
         - '#will always evaluate to true#'
         - '#Negated boolean expression is always false#'
+        - '#is never assigned DateTimeInterface so it can be removed#'
