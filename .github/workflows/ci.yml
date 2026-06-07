@@ -111,3 +111,33 @@ jobs:
           DATABASE_URL: postgresql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
           KERNEL_CLASS: App\Kernel
           # Lancement de la suite de tests avec l'environnement PostgreSQL
+
+  backend-quality:
+    name: backend-quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql
+          coverage: xdebug
+      - name: Installation dépendances backend
+        run: composer install --no-progress --prefer-dist
+        working-directory: backend
+      - name: Run PHPStan
+        run: vendor/bin/phpstan analyse --error-format=github
+        working-directory: backend
+      - name: Run tests with coverage
+        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        working-directory: backend
+        env:
+          DATABASE_URL: postgresql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
+          KERNEL_CLASS: App\Kernel
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: ./backend/coverage.xml
