@@ -28,7 +28,16 @@ COPY composer.json composer.lock ./
 # Ensuite copier le reste
 COPY . . 
 
+# Install build tools for phpize
+RUN apk add --no-cache $PHPIZE_DEPS linux-headers
+
+# Install Xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Composer install
 RUN composer install --optimize-autoloader 
+
 
 EXPOSE 9000 
 CMD ["php", "-S", "0.0.0.0:9000", "-t", "public"]
