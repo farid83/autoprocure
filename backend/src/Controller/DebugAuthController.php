@@ -13,6 +13,7 @@ class DebugAuthController extends AbstractController
     #[Route('', methods: ['GET'])]
     public function debug(): JsonResponse
     {
+        /** @var \App\Entity\Utilisateur $user */
         $user = $this->getUser();
         
         if (!$user) {

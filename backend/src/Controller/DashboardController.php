@@ -22,6 +22,7 @@ class DashboardController extends AbstractController
         DemandeRepository $demRepo,
         UtilisateurRepository $userRepo
     ): JsonResponse {
+        /** @var \App\Entity\Utilisateur $user */
         $user = $this->getUser();
         $stats = [];
 
