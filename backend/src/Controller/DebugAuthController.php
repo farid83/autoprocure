@@ -8,17 +8,18 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/api/debug-auth', name: 'api_debug_auth')]
-class DebugAuthController extends AbstractController
+class DebugAuthController extends BaseController
 {
     #[Route('', methods: ['GET'])]
     public function debug(): JsonResponse
     {
-        $user = $this->getUser();
-        
+        $user = $this->getCurrentUser();
+
         if (!$user) {
             return $this->json(['error' => 'Not authenticated'], 401);
         }
 
+        /** @var \App\Entity\Utilisateur $user */
         return $this->json([
             'identifier' => $user->getUserIdentifier(),
             'roles_in_user_object' => $user->getRoles(),

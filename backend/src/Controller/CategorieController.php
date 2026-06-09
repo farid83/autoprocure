@@ -14,7 +14,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\ExpressionLanguage\Expression;
 
 #[Route('/api/categories', name: 'api_categories_')]
-class CategorieController extends AbstractController
+class CategorieController extends BaseController
 {
     #[Route('', name: 'index', methods: ['GET'])]
     #[IsGranted(new Expression("is_granted('ROLE_COMPTABLE_MATIERE') or is_granted('ROLE_ADMIN')"))]
@@ -31,7 +31,8 @@ class CategorieController extends AbstractController
     ): JsonResponse {
         $cat = new Categorie();
         $cat->setNom($dto->nom);
-        $cat->setCreatedBy($this->getUser());
+        
+        $cat->setCreatedBy($this->getCurrentUser());
 
         $em->persist($cat);
         

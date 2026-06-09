@@ -21,7 +21,7 @@ use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\Request;
 
 #[Route('/api/materiels', name: 'api_materiels_')]
-class MaterielController extends AbstractController
+class MaterielController extends BaseController
 {
     #[Route('', name: 'index', methods: ['GET'])]
     public function index(Request $request, MaterielRepository $repo): JsonResponse
@@ -56,7 +56,7 @@ class MaterielController extends AbstractController
         $materiel->setQuantiteDisponible($dto->quantiteTotale); // Initially equal
         $materiel->setEtat($dto->etat);
         $materiel->setSeuilAlerte($dto->seuilAlerte);
-        $materiel->setCreatedBy($this->getUser());
+        $materiel->setCreatedBy($this->getCurrentUser());
 
         $em->persist($materiel);
 
