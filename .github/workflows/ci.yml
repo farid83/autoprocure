@@ -32,6 +32,12 @@ jobs:
         run: npm ci         # 'ci'= install propre depuis package-lock.json
         working-directory: frontend
 
+      # ETAPE 3.1 : Vérifier les vulnérabilités de sécurité
+      - name: Security audit frontend
+        run: npm audit --audit-level=high
+        working-directory: frontend
+        continue-on-error: true
+
       # ETAPE 4 : Vérifier compilation React
       - name: Build React
         run: npm run build
@@ -91,6 +97,12 @@ jobs:
       - name: Installation dépendances backend
         run: composer install --no-progress --no-suggest --prefer-dist
         working-directory: backend
+      
+      # ETAPE 3.1 : Vérifier les vulnérabilités de sécurité
+      - name: Security audit backend
+        run: composer audit --no-dev --format=plain --ignore-severity low
+        working-directory: backend
+        continue-on-error: true
 
       # ETAPE 4 : Préparer la base de données de test (PostgreSQL)
       - name: Create Database and Schema
