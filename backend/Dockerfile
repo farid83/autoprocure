@@ -36,8 +36,7 @@ RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 # Composer install
-RUN composer install --optimize-autoloader 
-
+RUN APP_ENV=prod composer install --optimize-autoloader --no-scripts --no-dev
 
 EXPOSE 9000 
 CMD ["php", "-S", "0.0.0.0:9000", "-t", "public"]
