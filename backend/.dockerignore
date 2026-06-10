@@ -1,0 +1,5 @@
+config/jwt/private.pem
+config/jwt/public.pem
+.env
+.env.local
+var/
