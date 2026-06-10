@@ -32,6 +32,8 @@ FROM nginx:alpine
 # ↑ Nouvelle image propre : juste un serveur web Nginx, sans Node.js 
 # ↑ L'image finale sera beaucoup plus légère (~20 Mo au lieu de ~400 Mo) 
 
+
+RUN apk upgrade --no-cache
 COPY --from=builder /app/dist /usr/share/nginx/html 
 
 # Copie de la configuration Nginx personnalisée pour gérer le routage SPA
