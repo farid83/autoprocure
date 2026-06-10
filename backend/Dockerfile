@@ -28,12 +28,8 @@ COPY composer.json composer.lock ./
 # Ensuite copier le reste
 COPY . . 
 
-# Install build tools for phpize
-RUN apk add --no-cache $PHPIZE_DEPS linux-headers
-
-# Install Xdebug
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+# Créer un fichier .env avec les variables d'environnement nécessaires (ex: APP_ENV=prod)
+RUN echo "APP_ENV=prod" > .env
 
 # Composer install
 RUN APP_ENV=prod composer install --optimize-autoloader --no-scripts --no-dev
