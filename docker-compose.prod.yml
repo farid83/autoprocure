@@ -10,7 +10,8 @@ services:
     environment: 
       DATABASE_URL: ${DATABASE_URL} 
       APP_ENV: prod
-      CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN} 
+      CORS_ALLOW_ORIGIN: ${CORS_ALLOW_ORIGIN}
+      DEFAULT_URI: ${DEFAULT_URI} 
     volumes:
       - /home/deploy/autoprocure/jwt/private.pem:/var/www/html/config/jwt/private.pem:ro
       - /home/deploy/autoprocure/jwt/public.pem:/var/www/html/config/jwt/public.pem:ro
