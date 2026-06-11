@@ -171,7 +171,7 @@ jobs:
           DATABASE_URL: postgresql://anjtech:pass_test@127.0.0.1:5432/inventory_api_db_test
           KERNEL_CLASS: App\Kernel
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report
           path: ./backend/coverage.xml
