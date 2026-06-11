@@ -55,7 +55,7 @@ security:
         - { path: ^/api/categories, roles: ROLE_ADMIN }
 
         # Users & validations : admin seulement
-        - { path: ^/api/users, roles: ROLE_ADMIN }
+        - { path: ^/api/utilisateurs, roles: ROLE_ADMIN }
         - { path: ^/api/validations, roles: ROLE_ADMIN }
 
         # Demandes : tous les authentifiés
