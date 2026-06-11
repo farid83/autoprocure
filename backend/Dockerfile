@@ -1,4 +1,4 @@
-FROM php:8.4-fpm-alpine 
+FROM php:8.5-fpm-alpine 
 # ↑ Image officielle PHP 8.4 avec PHP-FPM (gestionnaire de processus PHP) 
 
 # Installer les outils système et les extensions PHP nécessaires à Symfony 
