@@ -39,12 +39,9 @@ security:
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
 
         # Materiels
-        - {
-              path: ^/api/materiels,
-              methods: [GET, PUT],
-              roles: ROLE_COMPTABLE_MATIERE,
-          }
-        - { path: ^/api/materiels, roles: ROLE_ADMIN }
+        - { path: ^/api/materiels, methods: [GET], roles: ROLE_USER }
+        - { path: ^/api/materiels, methods: [PUT], roles: ROLE_COMPTABLE_MATIERE }
+        - { path: ^/api/materiels, methods: [POST, PATCH, DELETE], roles: ROLE_ADMIN }
 
         # Categories
         - {
