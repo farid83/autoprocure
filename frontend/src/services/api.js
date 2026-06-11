@@ -3,11 +3,11 @@ import Dashboard from "../pages/Dashboard";
 
 /**
  * Service API pour communiquer avec le Backend Symfony.
- * 
+ *
  * NOTE PÉDAGOGIQUE :
  * Ce fichier centralise tous les appels API. Cela rend le code plus propre et plus facile à maintenir.
  * Nous utilisons ici la bibliothèque `axios` au lieu de `fetch`.
- * 
+ *
  * Pourquoi Axios ?
  * 1. Transformation JSON automatique : Pas besoin d'appeler `.json()` manuellement.
  * 2. Meilleure gestion des erreurs : Lance des exceptions automatiquement pour les codes 4xx/5xx.
@@ -21,13 +21,13 @@ const api = axios.create({
     baseURL: API_URL,
     headers: {
         "Content-Type": "application/json",
-        "Accept": "application/json",
+        Accept: "application/json",
     },
 });
 
 /**
  * Intercepteur de Requête
- * 
+ *
  * NOTE PÉDAGOGIQUE :
  * Un intercepteur permet d'exécuter du code *avant* que la requête ne soit envoyée.
  * Ici, on vérifie si un token est présent dans le LocalStorage et on l'ajoute aux headers.
@@ -44,12 +44,12 @@ api.interceptors.request.use(
     },
     (error) => {
         return Promise.reject(error);
-    }
+    },
 );
 
 /**
  * Intercepteur de Réponse
- * 
+ *
  * NOTE PÉDAGOGIQUE :
  * On peut aussi intercepter les réponses.
  * Ici, on retourne directement `response.data` pour ne pas avoir à taper `.data` dans nos composants.
@@ -66,9 +66,14 @@ api.interceptors.response.use(
             window.dispatchEvent(new CustomEvent("auth:logout"));
         }
 
+        if (error.response && error.response.status === 403) {
+            console.warn("Accès refusé (403)");
+            window.location.href = "/forbidden";
+        }
+
         const message = error.response?.data?.message || error.message;
         return Promise.reject(message);
-    }
+    },
 );
 
 // --- Endpoints d'Authentification ---
