@@ -12,8 +12,8 @@ import { Loader2 } from 'lucide-react';
  * 2. Si pas authentifié : redirige vers /login.
  * 3. Si authentifié : affiche les enfants (la page demandée).
  */
-const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated, isCheckingSession } = useAuth();
+const ProtectedRoute = ({ children, allowedRoles }) => {
+    const { isAuthenticated, isCheckingSession, hasAnyRole } = useAuth();
 
     if (isCheckingSession) {
         return (
@@ -29,6 +29,10 @@ const ProtectedRoute = ({ children }) => {
     if (!isAuthenticated) {
         // L'utilisateur n'est pas connecté, redirection vers /login
         return <Navigate to="/login" replace />;
+    }
+
+    if (allowedRoles && !hasAnyRole(allowedRoles)) {
+        return <Navigate to="/forbidden" replace />;
     }
 
     // Authentifié, on affiche le contenu
