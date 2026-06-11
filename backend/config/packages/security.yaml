@@ -1,7 +1,7 @@
 security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
@@ -34,7 +34,32 @@ security:
             jwt: ~
 
     access_control:
+        # Routes publiques
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api/register, roles: PUBLIC_ACCESS }
-        - { path: ^/api, methods: [GET], roles: PUBLIC_ACCESS }
+
+        # Materiels
+        - {
+              path: ^/api/materiels,
+              methods: [GET, PUT],
+              roles: ROLE_COMPTABLE_MATIERE,
+          }
+        - { path: ^/api/materiels, roles: ROLE_ADMIN }
+
+        # Categories
+        - {
+              path: ^/api/categories,
+              methods: [GET, PUT],
+              roles: ROLE_COMPTABLE_MATIERE,
+          }
+        - { path: ^/api/categories, roles: ROLE_ADMIN }
+
+        # Users & validations : admin seulement
+        - { path: ^/api/users, roles: ROLE_ADMIN }
+        - { path: ^/api/validations, roles: ROLE_ADMIN }
+
+        # Demandes : tous les authentifiés
+        - { path: ^/api/requests, roles: IS_AUTHENTICATED_FULLY }
+
+        # Fallback
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
