@@ -29,3 +29,11 @@
 .DS_Store
 
 dist/ 
+
+# Ignorer fichiers de sortie de tests frontend
+/frontend/register_fail.txt
+/frontend/register_test_output.txt
+/frontend/test_output.txt
+/frontend/test_output2.txt
+
+frontend/*.txt
