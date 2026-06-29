@@ -73,7 +73,7 @@ describe('Register Component', () => {
 
         // Assert
         expect(await screen.findByText('L\'email n\'est pas valide')).toBeInTheDocument();
-        expect(await screen.findByText(/Le mot de passe doit contenir au moins 8 caractères/)).toBeInTheDocument();
+        expect(await screen.findByText(/Le mot de passe doit contenir au moins 12 caractères/)).toBeInTheDocument();
         expect(api.post).not.toHaveBeenCalled();
     });
 
