@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
         if (token) {
             try {
                 const payload = JSON.parse(atob(token.split('.')[1]));
-                setUser({ email: payload.username, roles: payload.roles });
+                setUser({ email: payload.username, nom: payload.nom, roles: payload.roles });
             } catch (e) {
                 console.error("Token invalide", e);
                 localStorage.removeItem("token");
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem("token", token);
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
-            setUser({ email: payload.username, roles: payload.roles });
+            setUser({ email: payload.username, nom: payload.nom, roles: payload.roles });
         } catch {
             setUser({ email: "Utilisateur" });
         }

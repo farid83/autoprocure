@@ -106,7 +106,7 @@ const Dashboard = () => {
             <div className="flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0">
                 <div>
                     <h1 className="text-3xl font-bold text-foreground">
-                        Bonjour, {user?.email}
+                        Bonjour, {user?.nom || user?.email}
                     </h1>
                     <p className="text-muted-foreground">
                         Voici un aperçu de vos activités
