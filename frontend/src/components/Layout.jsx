@@ -157,18 +157,18 @@ const Layout = () => {
                                 <Button variant="ghost" className="relative p-1 h-auto flex items-center gap-2 rounded-full hover:bg-muted pr-2">
                                     <Avatar className="h-8 w-8 border border-border">
                                         <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">
-                                            {user?.email?.charAt(0).toUpperCase()}
+                                            {user?.nom?.charAt(0).toUpperCase()}
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="hidden sm:block text-left">
-                                        <p className="text-xs font-semibold truncate max-w-[120px]">{user?.email}</p>
+                                        <p className="text-xs font-semibold truncate max-w-[120px]">{user?.nom}</p>
                                     </div>
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-56" align="end">
                                 <DropdownMenuLabel className="font-normal p-4">
                                     <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-bold">{user?.email}</p>
+                                        <p className="text-sm font-bold">{user?.nom}</p>
                                         <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
                                             {user?.roles?.join(', ')}
                                         </p>
