@@ -16,7 +16,7 @@ jobs:
     steps:
       # ETAPE 1 : Récupérer le code source
       - name: Checkout du code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         # Action officielle Github qui con votre dépôt sur le runner
 
       # ETAPE 2 : Installer Node.js
@@ -82,7 +82,7 @@ jobs:
     steps:
       # ETAPE 1 : Récupérer le code source
       - name: Checkout du code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # ETAPE 2 : Installer PHP
       - name: Setup PHP
@@ -143,7 +143,7 @@ jobs:
           --health-retries 5
     steps:
       - name: Checkout du code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
