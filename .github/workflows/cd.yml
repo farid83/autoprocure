@@ -36,7 +36,7 @@ jobs:
           echo "sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
       - name: Build & push frontend
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ./frontend
           push: true
@@ -47,7 +47,7 @@ jobs:
             ghcr.io/${{ steps.meta.outputs.repo }}-frontend:${{ steps.meta.outputs.sha }}
 
       - name: Build & push backend
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: ./backend
           push: true
