@@ -19,7 +19,7 @@
         "symfony/expression-language": "8.0.*",
         "symfony/flex": "^2.11",
         "symfony/framework-bundle": "8.0.*",
-        "symfony/mailer": "8.0.*",
+        "symfony/mailer": "8.1.*",
         "symfony/notifier": "8.0.*",
         "symfony/runtime": "8.0.*",
         "symfony/security-bundle": "8.0.*",
